@@ -7,44 +7,66 @@ class FaqController extends BaseController
 {
     public function __construct()
     {
-
+        helper(['alert_helper']);
     }
     public function index()
     {
         
         $Model = new Faq();
-        $data = $Model->findAll();
-        return view('users/faq/index',$data);
-    }
-    public function update()
-    {
-        
-        $Model = new Faq();
-        $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
-        $existingData = $Model->where($dataToInsert)->first();
-        if($existingData){
-            return view('users/faq/index',$existingData);
-        }
-        else{
-            $Model->insert($dataToInsert);
-            $existingData = $Model->where($dataToInsert)->first();
-            return view('users/faq/index',$existingData);
-        }
+        $faq = $Model->findAll();
+        return view('users/faq/index',['faq' => $faq]);
     }
 
-    function simpan($id){
-        helper(['alert_helper']);
+    function simpan(){
         $data = [
-            'id_tentang_kami' => $_POST['id'],
+            'id_pengguna' => session()->get('id_pengguna'),
+            'organisasi_kode' => session()->get('organisasi_kode'),
             'pertanyaan'  => $_POST['pertanyaan'],
-            'jawaban' => $_POST['jawaban'],
+            'jawaban' => $_POST['Jawaban'],
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 
                 ];
         $Model = new Faq();
         $Model->save($data);
-        set_notif('success','berhasil','berhasil ubah Tentang');
+        set_notif('success','berhasil','berhasil tambah Faq');
+        return redirect('user/faq');
+
+
+    }
+
+    function tambah() {
+        return view('users/faq/tambah');
+    }
+
+    public function hapus($id)
+    {
+        $Model = new Faq();
+        $faq = $Model->where('id_faq',$id)->delete();
+        // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
+        set_notif('success','berhasil','berhasil hapus Faq');
+        return redirect('user/faq');
+    }
+
+      public function edit($id)
+    {
+        $Model = new Faq();
+        $faq = $Model->where('id_faq',$id)->first();
+        return view('users/faq/edit',$faq);
+    }
+
+    function update(){
+        $data = [
+            'id_faq'  => $_POST['id'],
+            'pertanyaan'  => $_POST['pertanyaan'],
+            'jawaban' => $_POST['Jawaban'],
+            'waktu_simpan_data'=> date('y-m-d'),
+            'status'=>$_POST['status']
+
+                ];
+        $Model = new Faq();
+        $Model->save($data);
+        set_notif('success','berhasil','berhasil tambah Faq');
         return redirect('user/faq');
 
 

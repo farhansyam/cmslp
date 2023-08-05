@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html
+
   lang="en"
   class="light-style layout-navbar-fixed layout-menu-fixed"
   dir="ltr"
@@ -8,7 +9,7 @@
   data-assets-path="<?= base_url('assets/') ?>"
   data-template="vertical-menu-template">
   <head>
-    <meta charset="utf-8" />
+  <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -30,7 +31,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/fontawesome.css')?>" />
     <!-- Menu waves for no-customizer fix -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/node-waves/node-waves.css')?>" />
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')?>" />
     <!-- Core CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/rtl/core.css')?>" class="template-customizer-core-css" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/rtl/theme-default.css')?>" class="template-customizer-theme-css" />
@@ -39,9 +39,11 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.cs')?>s" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/typeahead-js/typeahead.css')?>" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
     <!-- Vendor -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/formvalidation/dist/css/formValidation.min.c')?>ss" />
-
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/pages/page-auth.css')?>" />
@@ -152,8 +154,8 @@
                 <div data-i18n="Pengaturan Website">Pengaturan Website</div>
               </a>
             </li>
-            <li class="menu-item <?= uri_string() == 'user/informasi-kontak' ? 'active' : ''; ?>">
-              <a href="<?= site_url('user/informasi-kontak')?>" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'user/infokontak' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/infokontak')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-contacts-outline"></i>
                 <div data-i18n="Informasi Kontak">Informasi Kontak</div>
               </a>
@@ -175,39 +177,39 @@
               <span class="menu-header-text">Main</span>
             </li>
             <!-- Banners -->
-              <li class="menu-item">
-                <a href="app-kanban.html" class="menu-link">
+              <li class="menu-item <?= uri_string() == 'user/banners' ? 'active' : ''; ?>">
+                <a href="<?= site_url('user/banners')?>" class="menu-link">
                   <i class="menu-icon tf-icons mdi mdi-image-area"></i>
                   <div data-i18n="Banners">Banners</div>
                 </a>
               </li>
             <!-- Icons -->
-            <li class="menu-item">
-              <a href="icons-mdi.html" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'user/layanan' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/layanan')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-google-circles-extended"></i>
-                <div data-i18n="Services">Services</div>
+                <div data-i18n="Layanan">Layanan</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="icons-mdi.html" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'user/paket' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/paket')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-package"></i>
                 <div data-i18n="Packages">Packages</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="icons-mdi.html" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'user/portofolio' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/portofolio')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-archive-outline"></i>
                 <div data-i18n="Portofolio">Portofolio</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="icons-mdi.html" class="menu-link">
+            <li class="menu-item  <?= uri_string() == 'user/kerjasama-client' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/kerjasama-client')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-briefcase-outline"></i>
                 <div data-i18n="Client Work">Client Work</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="icons-mdi.html" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'user/testimoni' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/testimoni')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-star-outline"></i>
                 <div data-i18n="Testimoni">Testimoni</div>
               </a>
@@ -335,8 +337,6 @@
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')?>"></script>
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')?>"></script>
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')?>"></script>
-    <script src="<?= base_url('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')?>"></script>
-    <script src="<?= base_url('assets/js/tables-datatables-basic.js')?>"></script>
     <!-- Main JS -->
     <script src="<?= base_url('assets/js/main.js')?>"></script>
 

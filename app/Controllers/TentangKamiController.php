@@ -32,9 +32,9 @@ class TentangKamiController extends BaseController
             'visi'  => $_POST['visi'],
             'misi' => $_POST['misi'],
             'motto' =>$_POST['motto'],
-            'deksripsi_1'=>$_POST['deskripsi_1'],
-            'deksripsi_2'=>$_POST['deskripsi_2'],
-            'deksripsi_portofolio'=>$_POST['deskripsi_portofolio'],
+            'deskripsi_1'=>$_POST['deskripsi_1'],
+            'deskripsi_2'=>$_POST['deskripsi_2'],
+            'deskripsi_portofolio'=>$_POST['deskripsi_portofolio'],
             'status'=>$_POST['status'],
             'waktu_simpan_data'=> date('y-m-d')
 

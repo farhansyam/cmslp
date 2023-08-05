@@ -2,96 +2,61 @@
 
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4">Data Faq</h4>
-<div class="card">
-                <div class="card-datatable table-responsive pt-0">
-                  <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                    <div class="card-header flex-column flex-md-row">
+              <h4 class="fw-bold py-3 mb-4"> FAQ (Frequently Asked Questions)</h4>
+              <!-- Bootstrap Table with Header - Light -->
+              <div class="card">
+                <h5 class="card-header">Table Data Faq</h5>
+                <div class="table-responsive text-wrap">
+                <div class="card-body">
+                      <div class="demo-inline-spacing">
+                        <a href="<?= site_url('user/faq/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                      </div>
                     </div>
-                  </div>
-                  <table class="datatables-basic table table-bordered dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1214px;">
-                    <thead>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" style="width: 118.2px;" aria-label="Name: activate to sort column ascending">No</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" style="width: 118.2px;" aria-label="Name: activate to sort column ascending">No</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" style="width: 109.2px;" aria-label="Date: activate to sort column ascending">Jawaban</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" style="width: 143.2px;" aria-label="Status: activate to sort column ascending">Status</th>
-                      <th class="sorting_disabled" style="width: 151px;" aria-label="Actions">Actions</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr class="odd">
-                        <td valign="top" class="">1</td>
-                        <td valign="top" class="">1</td>
-                        <td valign="top" class="">1</td>
-                        <td valign="top" class="">1</td>
-                        <td valign="top" class="">1</td>
+
+                  <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th>No</th>
+                        <th>Pertanyaan</th>
+                        <th>Jawaban</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <?php 
+                    $no = 1;
+                    foreach($faq as $d) { ?>
+                           <tr>
+                        <td><?= $no++?></td>
+                        <td><?= $d['pertanyaan']?></td>
+                        <td><?= $d['jawaban']?></td>
+                        <td><?php if($d['status'] == 1) {?>
+                        <span class="badge bg-label-success me-1">Active</span>
+                          <?php } else{?>
+                        <span class="badge bg-label-danger me-1">Deactive</span>
+                         <?php } ?>
+                        </td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="mdi mdi-dots-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item waves-effect" href="<?= site_url('user/faq/edit/')?><?=$d['id_faq']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('user/faq/hapus/')?><?=$d['id_faq']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php } ?>
                     </tbody>
-                  </table><div class="row"><div class="col-sm-12 col-md-6">
+                  </table>
                 </div>
               </div>
-</div>
-<div class="offcanvas offcanvas-end" id="add-new-record" aria-modal="true" role="dialog">
-                <div class="offcanvas-header border-bottom">
-                  <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body flex-grow-1">
-                  <form class="add-new-record pt-0 row g-3 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record" onsubmit="return false" novalidate="novalidate">
-                    <div class="col-sm-12 fv-plugins-icon-container">
-                      <div class="input-group input-group-merge">
-                        <span id="basicFullname2" class="input-group-text"><i class="mdi mdi-account-outline"></i></span>
-                        <div class="form-floating form-floating-outline">
-                          <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname" placeholder="John Doe" aria-label="John Doe" aria-describedby="basicFullname2">
-                          <label for="basicFullname">Full Name</label>
-                        </div>
-                      </div>
-                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                    <div class="col-sm-12 fv-plugins-icon-container">
-                      <div class="input-group input-group-merge">
-                        <span id="basicPost2" class="input-group-text"><i class="mdi mdi-briefcase-outline"></i></span>
-                        <div class="form-floating form-floating-outline">
-                          <input type="text" id="basicPost" name="basicPost" class="form-control dt-post" placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2">
-                          <label for="basicPost">Post</label>
-                        </div>
-                      </div>
-                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                    <div class="col-sm-12 fv-plugins-icon-container">
-                      <div class="input-group input-group-merge">
-                        <span class="input-group-text"><i class="mdi mdi-email-outline"></i></span>
-                        <div class="form-floating form-floating-outline">
-                          <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email" placeholder="john.doe@example.com" aria-label="john.doe@example.com">
-                          <label for="basicEmail">Email</label>
-                        </div>
-                      </div>
-                      <div class="form-text">You can use letters, numbers &amp; periods</div>
-                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                    <div class="col-sm-12 fv-plugins-icon-container">
-                      <div class="input-group input-group-merge">
-                        <span id="basicDate2" class="input-group-text"><i class="mdi mdi-calendar-month-outline"></i></span>
-                        <div class="form-floating form-floating-outline">
-                          <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" readonly="readonly">
-                          <label for="basicDate">Joining Date</label>
-                        </div>
-                      </div>
-                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                    <div class="col-sm-12 fv-plugins-icon-container">
-                      <div class="input-group input-group-merge">
-                        <span id="basicSalary2" class="input-group-text"><i class="mdi mdi-currency-usd"></i></span>
-                        <div class="form-floating form-floating-outline">
-                          <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary" placeholder="12000" aria-label="12000" aria-describedby="basicSalary2">
-                          <label for="basicSalary">Salary</label>
-                        </div>
-                      </div>
-                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                    <div class="col-sm-12">
-                      <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1 waves-effect waves-light">Submit</button>
-                      <button type="reset" class="btn btn-outline-secondary waves-effect" data-bs-dismiss="offcanvas">Cancel</button>
-                    </div>
-                  <input type="hidden"></form>
-                </div>
-              </div>
-              </div>
-              </div>
-        </div>
+
+          
+              <!--/ Responsive Table -->
+            </div>
 
 <?= $this->endSection() ?>

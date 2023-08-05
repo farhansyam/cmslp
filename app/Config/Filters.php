@@ -9,6 +9,8 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\User;
+use App\Filters\Admin;
+use App\Filters\Superadmin;
 use App\Filters\BelumLogin;
 
 
@@ -25,6 +27,8 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'User'    => User::Class,
+        'Superadmin'    => Superadmin::Class,
+        'Admin'    => Admin::Class,
         'BelumLogin'    => BelumLogin::Class,
     ];
 

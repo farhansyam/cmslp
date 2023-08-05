@@ -6,10 +6,11 @@ class Dashboard extends BaseController
 {
     public function index()
     {
-        $data = [
-            'current_page' => 'dashboard'
-        ];
-        return view('users/index',$data);
+        return view('users/index');
+    }
+    public function index2()
+    {
+        return view('superadmin/index');
     }
 
     function logout(){
