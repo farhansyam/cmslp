@@ -12,10 +12,10 @@ class LayananController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new Layanan();
-        $layanan = $Model->findAll();
-        return view('users/layanan/index',['layanan' => $layanan]);
+        $layanan = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/layanan/index',['layanan' => $layanan,'role'=>$role]);
     }
 
     function simpan(){

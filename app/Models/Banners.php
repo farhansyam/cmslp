@@ -11,4 +11,9 @@ Class Banners extends Model
     protected $allowedFields = ['id_banner','id_pengguna','organisasi_kode','judul'
     ,'deskripsi','link','kategori','random_code','waktu_simpan_data','status'];
 
+
+public function images()
+    {
+        return $this->hasMany(Gambar::class, 'random_code', 'random_code');
+    }
 }

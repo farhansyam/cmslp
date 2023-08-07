@@ -6,6 +6,7 @@
  <?php if (isset($validation)): ?>
   <?= $validation->listErrors() ?>
         <?php endif; ?>
+           <?php  if($role['read_data'] == "Y") { ?>
               <form action="<?= site_url('user/pengaturan/simpan')?>" method="post">
               <input type="hidden" name="id" value="<?php echo $data['id_pengaturan_website'] ?>">
               <div class="row">
@@ -211,8 +212,11 @@
                             aria-describedby="basic-urlYoutube" />
                           <label for="basic-urlYoutube">Url Youtube</label>
                       </div>
+                       <?php  if($role['update_data'] == "Y") { ?>
                       <button type="submit" class="btn btn-primary">Simpan</button>
+                        <?php }?>
                       </form>
+                                <?php }?>
                          
                          
                      

@@ -11,10 +11,10 @@ class KerjasamaController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new KerjasamaClient();
-        $kerjasama = $Model->findAll();
-        return view('users/kerjasama-client/index',['kerjasama' => $kerjasama]);
+        $kerjasama =  $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/kerjasama-client/index',['kerjasama' => $kerjasama,'role'=>$role]);
     }
 
     function simpan(){
@@ -37,6 +37,7 @@ class KerjasamaController extends BaseController
                 $kerjasamaClientModel->save([
                     'nama_client' => $namaClient,
                     'logo_client' => $name,
+                    'organisasi_kode' => session()->get('organisasi_kode'),
                     'status' => $status,
                 ]);
                   set_notif('success','berhasil','berhasil tambah client work');

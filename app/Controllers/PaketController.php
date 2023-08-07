@@ -11,10 +11,10 @@ class PaketController extends BaseController
     }
     public function index()
     {
-        
+        $role =  $this->getRoleData();
         $Model = new Paket();
-        $paket = $Model->findAll();
-        return view('users/paket/index',['paket' => $paket]);
+        $paket = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/paket/index',['paket' => $paket,'role'=>$role]);
     }
 
     function simpan(){

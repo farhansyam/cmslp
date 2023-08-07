@@ -12,10 +12,10 @@ class BannersController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new banners();
-        $banners = $Model->findAll();
-        return view('users/banners/index',['banners' => $banners]);
+        $banners = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/banners/index',['banners' => $banners,'role' => $role]);
     }
 
     function tambah() {

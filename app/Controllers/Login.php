@@ -12,11 +12,13 @@ class Login extends BaseController
 
         if($login)
         {
+            $ModelRole = new \App\Models\ModelRole();
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
             $kode_organisasi = $this->request->getPost('kode-organisasi');
 
             $dataPengguna = $ModelPengguna->where('username',$username)->first();
+            $role = $ModelRole->where('id_role',$dataPengguna['sebagai'])->first();
 
             if(!$dataPengguna){
                 $err = "Username tidak ditemukan !";
@@ -46,7 +48,12 @@ class Login extends BaseController
                     'id_pengguna' => $dataPengguna['id_pengguna'],
                     'username' => $dataPengguna['username'],
                     'organisasi_kode' => $dataPengguna['organisasi_kode'],
+                    'role_baku' => $dataPengguna['role_baku'],
                     'role' => $dataPengguna['sebagai'],
+                    'create' => $role['create_data'],
+                    'read' => $role['read_data'],
+                    'update' => $role['update_data'],
+                    'delete' => $role['delete_data'],
                 ];
 
                 session()->set($dataSesi);
@@ -96,6 +103,7 @@ class Login extends BaseController
                     'id_admin' => $dataPengguna['id_admin'],
                     'username' => $dataPengguna['username'],
                     'role' => $dataPengguna['role'],
+                    'role_baku' => $dataPengguna['role_baku'],
                     'create' => $role['create_data'],
                     'read' => $role['read_data'],
                     'update' => $role['update_data'],
@@ -112,14 +120,15 @@ class Login extends BaseController
                     'id_admin' => $dataPengguna['id_admin'],
                     'username' => $dataPengguna['username'],
                     'role' => $dataPengguna['role'],
+                    'role_baku' => $dataPengguna['role_baku'],
                     'create' => $role['create_data'],
-                    'read' => $role['read'],
-                    'update' => $role['update'],
-                    'delete' => $role['delete'],
+                    'read' => $role['read_data'],
+                    'update' => $role['update_data'],
+                    'delete' => $role['delete_data'],
                 ];
 
                 session()->set($dataSesi);
-                return redirect('admin');
+                return redirect('admins');
                 }
             }
 

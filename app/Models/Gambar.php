@@ -39,4 +39,9 @@ class Gambar extends Model
 	protected $afterFind            = [];
 	protected $beforeDelete         = [];
 	protected $afterDelete          = [];
+
+	 public function banner()
+    {
+        return $this->belongsTo(Banners::class, 'random_code', 'random_code');
+    }
 }

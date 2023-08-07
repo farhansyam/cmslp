@@ -11,10 +11,10 @@ class FaqController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new Faq();
-        $faq = $Model->findAll();
-        return view('users/faq/index',['faq' => $faq]);
+        $faq = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/faq/index',['faq' => $faq,'role'=>$role]);
     }
 
     function simpan(){
@@ -66,7 +66,7 @@ class FaqController extends BaseController
                 ];
         $Model = new Faq();
         $Model->save($data);
-        set_notif('success','berhasil','berhasil tambah Faq');
+        set_notif('success','berhasil','berhasil edit Faq');
         return redirect('user/faq');
 
 

@@ -12,10 +12,10 @@ class PortofolioController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new Portofolio();
-        $protofolio = $Model->findAll();
-        return view('users/portofolio/index',['portofolio' => $protofolio]);
+        $protofolio = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/portofolio/index',['portofolio' => $protofolio,'role'=>$role]);
     }
 
     function simpan(){

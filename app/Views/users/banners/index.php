@@ -8,11 +8,14 @@
                 <h5 class="card-header">Table Data Banners</h5>
                 <div class="table-responsive text-wrap">
                 <div class="card-body">
-                      <div class="demo-inline-spacing">
-                        <a href="<?= site_url('user/banners/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
-                      </div>
+                   <?php  if($role['create_data'] == "Y") { ?>
+                    <div class="demo-inline-spacing">
+                      <a href="<?= site_url('user/banners/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
                     </div>
-
+                              <?php }?>
+                    </div>
+ <?php  if($role['read_data'] == "Y") { ?>
+                              <?php }?>
                   <table class="table">
                     <thead class="table-light">
                       <tr>
@@ -32,12 +35,12 @@
                     foreach($banners as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
-                        <td><a href="<?= site_url('user/banners/detail/'.$d['id_banner'] )?>"><button>View</button></a></td>
-                        <td><?= $d['judul']?></td>
-                        <td><?= $d['deskripsi']?></td>
-                        <td><?= $d['link']?></td>
-                        <td><?= $d['kategori']?></td>
-                        <td><?php if($d['status'] == 1) {?>
+                        <td><a href="<?= site_url('user/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                        <td><?= $d->judul?></td>
+                        <td><?= $d->deskripsi?></td>
+                        <td><?= $d->link?></td>
+                        <td><?= $d->kategori?></td>
+                        <td><?php if($d->status == 1) {?>
                         <span class="badge bg-label-success me-1">Active</span>
                           <?php } else{?>
                         <span class="badge bg-label-danger me-1">Deactive</span>
@@ -49,8 +52,12 @@
                               <i class="mdi mdi-dots-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item waves-effect" href="<?= site_url('user/banners/edit/')?><?=$d['id_banner']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('user/banners/hapus/')?><?=$d['id_banner']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <?php  if($role['update_data'] == "Y") { ?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('user/banners/edit/')?><?=$d->id_banner?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <?php }?>
+                               <?php  if($role['delete_data'] == "Y") { ?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('user/banners/hapus/')?><?=$d->id_banner?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <?php }?>
                             </div>
                           </div>
                         </td>

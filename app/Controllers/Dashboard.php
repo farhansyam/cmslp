@@ -12,9 +12,17 @@ class Dashboard extends BaseController
     {
         return view('superadmin/index');
     }
+    public function index3()
+    {
+        return view('admin/index');
+    }
 
     function logout(){
         session()->destroy();
         return redirect()->to('login');
+    }
+    function logoutA(){
+        session()->destroy();
+        return redirect()->to('login-admin');
     }
 }

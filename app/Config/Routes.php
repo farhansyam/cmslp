@@ -14,6 +14,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('/login', 'Login::index' ,['filter' => 'BelumLogin']);
 $routes->get('/login-admin', 'Login::index2' ,['filter' => 'BelumLogin']);
+$routes->get('/getdata/(:num)', 'ApiController::index/$1');
 
 $routes->post('/login', 'Login::index');
 $routes->post('/login-admin', 'Login::index2');
@@ -107,11 +108,46 @@ $routes->group('user',['filter' => 'User'], static function ($routes) {
 // route role super admin
 $routes->group('superadmin',['filter' => 'Superadmin'], static function ($routes) {
     $routes->get('/', 'Dashboard::index2');
+    $routes->get('logout', 'Dashboard::logoutA');
+
+    // Admin
+    $routes->get('admin', 'adminController::index');
+    $routes->get('admin/tambah', 'adminController::tambah');
+    $routes->post('admin/simpan', 'adminController::simpan');
+    $routes->post('admin/update', 'adminController::update');
+    $routes->get('admin/hapus/(:num)', 'adminController::hapus/$1');
+    $routes->get('admin/edit/(:num)', 'adminController::edit/$1');
+
+    // Role
+    $routes->get('role', 'roleController::index');
+    $routes->get('role/tambah', 'roleController::tambah');
+    $routes->post('role/simpan', 'roleController::simpan');
+    $routes->post('role/update', 'roleController::update');
+    $routes->get('role/hapus/(:num)', 'roleController::hapus/$1');
+    $routes->get('role/edit/(:num)', 'roleController::edit/$1');
 });
 
 // route role super admin
-$routes->group('admin',['filter' => 'Admin'], static function ($routes) {
-    $routes->get('/', 'Dashboard::index2');
+$routes->group('admins',['filter' => 'Admin'], static function ($routes) {
+    $routes->get('/', 'Dashboard::index3');
+    $routes->get('logout', 'Dashboard::logoutA');
+
+     // Organisasi
+    $routes->get('organisasi', 'OrganisasiController::index');
+    $routes->get('organisasi/tambah', 'OrganisasiController::tambah');
+    $routes->post('organisasi/simpan', 'OrganisasiController::simpan');
+    $routes->post('organisasi/update', 'OrganisasiController::update');
+    $routes->get('organisasi/hapus/(:num)', 'OrganisasiController::hapus/$1');
+    $routes->get('organisasi/edit/(:num)', 'OrganisasiController::edit/$1');
+
+    // Pengguna
+    $routes->get('pengguna', 'PenggunaController::index');
+    $routes->get('pengguna/tambah', 'PenggunaController::tambah');
+    $routes->post('pengguna/simpan', 'PenggunaController::simpan');
+    $routes->post('pengguna/update', 'PenggunaController::update');
+    $routes->get('pengguna/hapus/(:num)', 'PenggunaController::hapus/$1');
+    $routes->get('pengguna/edit/(:num)', 'PenggunaController::edit/$1');
+
 });
 
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {

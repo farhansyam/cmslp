@@ -13,11 +13,12 @@ class PengaturanWebsiteController extends BaseController
     {
         
         $Model = new PengaturanWebsite();
+        $role = $this->getRoleData();
         $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
         $existingData = $Model->where($dataToInsert)->first();
         
         if($existingData){
-            return view('users/pengaturanweb/index',['data' => $existingData]);
+            return view('users/pengaturanweb/index',['data' => $existingData,'role' => $role]);
         }
         else{
             $Model->insert($dataToInsert);

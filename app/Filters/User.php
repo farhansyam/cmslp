@@ -10,11 +10,11 @@ class User implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(!session()->get('id_pengguna') and !session()->get('role') == 3){
+        if(!session()->get('id_pengguna') and !session()->get('role_baku') == 3){
             return redirect()->to('login');
-        }elseif(session()->get('id_admin') and session()->get('role') == 1){
+        }elseif(session()->get('id_admin') and session()->get('role_baku') == 1){
             return redirect()->to('superadmin');
-        }elseif(session()->get('id_admin') and session()->get('role') == 2){
+        }elseif(session()->get('id_admin') and session()->get('role_baku') == 2){
             return redirect()->to('admin');
         }
     }

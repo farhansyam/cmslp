@@ -10,11 +10,11 @@ class BelumLogin implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(session()->get('id_pengguna') and session()->get('role') == 'user'){
+        if(session()->get('id_pengguna') and session()->get('role_baku') == 2){
             return redirect()->to('user');
-        }else if(session()->get('id_admin') and session()->get('role') == 2){
-            return redirect()->to('admin');
-        }else if(session()->get('id_admin') and session()->get('role') == 1){
+        }else if(session()->get('id_admin') and session()->get('role_baku') == 2){
+            return redirect()->to('admins');
+        }else if(session()->get('id_admin') and session()->get('role_baku') == 1){
             return redirect()->to('superadmin');
         }
     }

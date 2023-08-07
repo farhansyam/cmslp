@@ -11,18 +11,18 @@ class InformasiKontakController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new PengaturanWebsite();
         $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
         $existingData = $Model->where($dataToInsert)->first();
         
         if($existingData){
-            return view('users/infokontak/index',$existingData);
+            return view('users/infokontak/index',['existingData' => $existingData ,'role'=>$role]);
         }
         else{
             $Model->insert($dataToInsert);
             $existingData = $Model->where($dataToInsert)->first();
-            return view('users/infokontak/index',$existingData);
+            return view('users/infokontak/index',['existingData' => $existingData,'role'=>$role]);
         }
     }
 

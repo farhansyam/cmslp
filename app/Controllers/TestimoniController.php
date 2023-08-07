@@ -11,10 +11,10 @@ class TestimoniController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new Testimoni();
-        $testimoni = $Model->findAll();
-        return view('users/testimoni/index',['testimoni' => $testimoni]);
+        $testimoni = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        return view('users/testimoni/index',['testimoni' => $testimoni,'role'=>$role]);
     }
 
     function simpan(){
@@ -36,6 +36,7 @@ class TestimoniController extends BaseController
                     'rating' => $rating,
                     'foto' => $namegambar,
                     'status' => $status,
+                    'organisasi_kode' => session()->get('organisasi_kode'),
                 ]);
                   set_notif('success','berhasil','berhasil tambah testimoni');
                   return redirect('user/testimoni');

@@ -11,17 +11,17 @@ class TentangKamiController extends BaseController
     }
     public function index()
     {
-        
+        $role = $this->getRoleData();
         $Model = new TentangKami();
         $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
         $existingData = $Model->where($dataToInsert)->first();
         if($existingData){
-            return view('users/tentangkami/index',$existingData);
+            return view('users/tentangkami/index',['existingData'=>$existingData,'role'=>$role]);
         }
         else{
             $Model->insert($dataToInsert);
             $existingData = $Model->where($dataToInsert)->first();
-            return view('users/tentangkami/index',$existingData);
+            return view('users/tentangkami/index',['existingData'=>$existingData,'role'=>$role]);
         }
     }
 
