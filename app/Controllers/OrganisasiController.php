@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ModelOrganisasi;
+use App\Models\ModelPengguna;
 
 class OrganisasiController extends BaseController
 {
@@ -9,6 +10,9 @@ class OrganisasiController extends BaseController
     {
         helper(['alert_helper']);
     }
+
+
+
     public function index()
     {
         
@@ -32,6 +36,7 @@ class OrganisasiController extends BaseController
                 $organisasiClientModel = new ModelOrganisasi;
                 $organisasiClientModel->save([
                     'organisasi_kode' => mt_rand(111111,999999),
+                    'id_pengguna_owner' => $this->request->getPost('id_owner'),
                     'nama_organisasi' => $nama_organisasi,
                     'alamat_organisasi' => $alamat_organisasi,
                     'no_telepon' => $no_telepon,
@@ -47,7 +52,9 @@ class OrganisasiController extends BaseController
     }
 
     function tambah() {
-        return view('admin/organisasi/tambah');
+        $model = new ModelPengguna();
+        $data = $model->findAll();
+        return view('admin/organisasi/tambah',['data'=>$data]);
     }
 
     public function hapus($id)
@@ -60,10 +67,11 @@ class OrganisasiController extends BaseController
     }
 
       public function edit($id)
-    {
+    { $model2 = new ModelPengguna();
+        $data = $model2->findAll();
         $Model = new ModelOrganisasi;
         $organisasi = $Model->where('id',$id)->first();
-        return view('admin/organisasi/edit',$organisasi);
+        return view('admin/organisasi/edit',['organisasi' => $organisasi,'data' => $data]);
     }
 
     function update(){
@@ -86,6 +94,7 @@ class OrganisasiController extends BaseController
                 // Simpan data ke database menggunakan model
                 $Model->save([
                     'id' => $id,
+                    'id_pengguna_owner' => $this->request->getPost('id_owner'),
                     'organisasi_kode' => mt_rand(111111,999999),
                     'nama_organisasi' => $nama_organisasi,
                     'alamat_organisasi' => $alamat_organisasi,

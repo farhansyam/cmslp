@@ -7,24 +7,27 @@ class Login extends BaseController
     public function index()
     {
         $ModelPengguna = new \App\Models\ModelPengguna();
+        $ModelOrganisasi = new \App\Models\ModelOrganisasi();
 
         $login = $this->request->getPost('login');
 
         if($login)
         {
             $ModelRole = new \App\Models\ModelRole();
+            $ModelOrganisasi = new \App\Models\ModelOrganisasi();
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
             $kode_organisasi = $this->request->getPost('kode-organisasi');
-
             $dataPengguna = $ModelPengguna->where('username',$username)->first();
-            $role = $ModelRole->where('id_role',$dataPengguna['sebagai'])->first();
-
+          
             if(!$dataPengguna){
                 $err = "Username tidak ditemukan !";
 
             }else{
-                if($dataPengguna['organisasi_kode'] != $kode_organisasi){
+                  $organisasi = $ModelOrganisasi->where('id_pengguna_owner',$dataPengguna['id_pengguna'])->where('organisasi_kode',$kode_organisasi)->first();
+            $role = $ModelRole->where('id_role',$dataPengguna['sebagai'])->first();
+
+                if($organisasi == NULL){
                 $err = "Kode Organisasi Salah !";
                 session()->setFlashdata('username',$username);
 
@@ -34,6 +37,12 @@ class Login extends BaseController
                 $err = "Password Salah !";
                 session()->setFlashdata('kode_organisasi',$kode_organisasi);
                 session()->setFlashdata('username',$username);
+            }else{
+                if($dataPengguna['status'] == 0){
+                $err = "Akun belum aktif hubungi admin !";
+                session()->setFlashdata('kode_organisasi',$kode_organisasi);
+                session()->setFlashdata('username',$username);
+                }
             }
             }
 
@@ -47,7 +56,7 @@ class Login extends BaseController
                 $dataSesi = [
                     'id_pengguna' => $dataPengguna['id_pengguna'],
                     'username' => $dataPengguna['username'],
-                    'organisasi_kode' => $dataPengguna['organisasi_kode'],
+                    'organisasi_kode' => $kode_organisasi,
                     'role_baku' => $dataPengguna['role_baku'],
                     'role' => $dataPengguna['sebagai'],
                     'create' => $role['create_data'],
@@ -57,7 +66,7 @@ class Login extends BaseController
                 ];
 
                 session()->set($dataSesi);
-                return redirect('user');
+                return redirect('user/pengaturan');
             }
 
 
@@ -79,12 +88,12 @@ class Login extends BaseController
             $password = $this->request->getPost('password');
 
             $dataPengguna = $ModelAdmin->where('username',$username)->first();
-            $role = $ModelRole->where('id_role',$dataPengguna['role'])->first();
-
+            
             if(!$dataPengguna){
                 $err = "Username tidak ditemukan !";
-
+                
             }else{
+                $role = $ModelRole->where('id_role',$dataPengguna['role'])->first();
                 if($dataPengguna['password'] != md5($password)){
                 $err = "Password Salah !";
                 session()->setFlashdata('username',$username);
@@ -111,7 +120,7 @@ class Login extends BaseController
                 ];
 
                 session()->set($dataSesi);
-                return redirect('superadmin');
+                return redirect('superadmin/admin');
                 }
 
                 else
@@ -128,7 +137,7 @@ class Login extends BaseController
                 ];
 
                 session()->set($dataSesi);
-                return redirect('admins');
+                return redirect('admins/organisasi');
                 }
             }
 

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 use App\Models\Portofolio;
 use App\Models\Gambar;
+use App\Models\ModelPengguna;
+use App\Models\ModelOrganisasi;
 
 class PortofolioController extends BaseController
 {
@@ -12,16 +14,26 @@ class PortofolioController extends BaseController
     }
     public function index()
     {
+        
         $role = $this->getRoleData();
         $Model = new Portofolio();
-        $protofolio = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        if(session()->get('role_baku') == 1){ 
+            $protofolio = $Model->get()->getResult();
+
+
+        }elseif(session()->get('role_baku') == 2){ 
+            
+            $protofolio = $Model->get()->getResult();
+            
+        }else{ 
+            
+            $protofolio = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+        } 
         return view('users/portofolio/index',['portofolio' => $protofolio,'role'=>$role]);
     }
 
     function simpan(){
-
-        
-        $image = $this->request->getFile('file');
+ $image = $this->request->getFile('file');
         
         $TenDigitRandomNumber = session()->get('random_code');
         
@@ -44,9 +56,19 @@ class PortofolioController extends BaseController
 			"gambar" => $name
 		));
     }
+        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+              $modelPengguna = new ModelPengguna;
+        $pengguna = $modelPengguna->where('organisasi_kode',$_POST['organisasi_kode'])->first();
+        $pengguna = $pengguna['id_pengguna'];
+        $organisasinya = $_POST['organisasi_kode'];
+    }else{
+        $pengguna = session()->get('id_pengguna');
+        $organisasinya = session()->get('organisasi_kode');
+    }
+       
      $data = [
-                            'id_pengguna' => session()->get('id_pengguna'),
-                            'organisasi_kode' => session()->get('organisasi_kode'),
+                            'id_pengguna' => $pengguna,
+                            'organisasi_kode' => $organisasinya,
                             'judul_portofolio'  => $_POST['judul_portofolio'],
                             'kategori_portofolio' => $_POST['kategori_portofolio'],
                             'deskripsi' => $_POST['deskripsi'],
@@ -63,7 +85,19 @@ class PortofolioController extends BaseController
                         $Model->save($data);
                         
                     set_notif('success','berhasil','berhasil tambah portofolio');
-                        return redirect('user/portofolio');
+                     if(session()->get('role_baku') == 1){ 
+
+                            return redirect('superadmin/portofolio');
+
+                        }elseif(session()->get('role_baku') == 2){ 
+
+                            return redirect('admin/portofolio');
+
+                        }else{ 
+
+                            return redirect('user/portofolio');
+                        } 
+
 
      
         } 
@@ -76,8 +110,11 @@ class PortofolioController extends BaseController
         $randomCodeLength = 16;
         $randomCode = bin2hex(random_bytes($randomCodeLength));
         $session = session();
+         $ModelOrganisasi = new ModelOrganisasi;
+        $data1 = $ModelOrganisasi->findAll();
+
         $session->set('random_code', $randomCode);
-        return view('users/portofolio/tambah');
+        return view('users/portofolio/tambah',['data1'=>$data1]);
     }
 
     public function hapus($id)
@@ -86,19 +123,25 @@ class PortofolioController extends BaseController
         $protofolio = $Model->where('id_portofolio',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus portofolio');
+        if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/portofolio');
+
+ }elseif(session()->get('role_baku') == 2){ 
+        return redirect('admin/portofolio');
+
+ }else{ 
         return redirect('user/portofolio');
+ } 
     }
     public function hapusgambar($id)
     {
         $Model = new Gambar();
         $protofolio = $Model->where('id_gambar',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
-        set_notif('success','berhasil','berhasil hapus portofolio');
+        set_notif('success','berhasil','berhasil hapus gambar');
 
     // Get the previous URL
     $previousURL = previous_url();
-
-    // Redirect the user back to the previous page
     return redirect()->to($previousURL);
     }
 
@@ -116,7 +159,7 @@ class PortofolioController extends BaseController
 
     function update($id){
         $porto  = new Portofolio();
-        $data2 = $porto->where('id_pengguna',session()->get('id_pengguna'))->where('id_portofolio',$id)->first();
+        $data2 = $porto->where('id_portofolio',$id)->first();
         $image = $this->request->getFile('file');
         $gambar1 = new Gambar();
         $gambar2 = $gambar1->where('random_code',$data2['random_code'])->first();
@@ -159,7 +202,18 @@ class PortofolioController extends BaseController
                         $Model->save($data);
                         
                     set_notif('success','berhasil','berhasil edit portofolio');
-                        return redirect('user/portofolio');
+                           if(session()->get('role_baku') == 1){ 
+
+                            return redirect('superadmin/portofolio');
+
+                        }elseif(session()->get('role_baku') == 2){ 
+
+                            return redirect('admin/portofolio');
+
+                        }else{ 
+
+                            return redirect('user/portofolio');
+                        } 
         }
     public function detail($id)
     {
@@ -171,6 +225,7 @@ class PortofolioController extends BaseController
        return view('users/portofolio/detail',['data1' => $data1,'dataGambar' => $dataGambar]);
       
     }
+   
     
 
 }

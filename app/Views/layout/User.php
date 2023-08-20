@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/pages/page-auth.css')?>" />
     <!-- Helpers -->
     <script src="<?= base_url('assets/vendor/js/helpers.js')?>"></script>
+      <script src="https://cdn.tiny.cloud/1/duf9pa4i1whjydpvnv84103i11oib8me88cuq5t2csqql3dp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -172,10 +173,29 @@
                 <div data-i18n="FAQ">FAQ</div>
               </a>
             </li>
+              <!-- Main -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Blog</span>
+            </li>
+ 
+            <!-- Blog -->
+            <li class="menu-item <?= uri_string() == 'user/blog' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/blog')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-post"></i>
+                <div data-i18n="Artikel">Artikel</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'user/kategori' ? 'active' : ''; ?>">
+              <a href="<?= site_url('user/kategori')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-list-box"></i>
+                <div data-i18n="Kategori">Kategori</div>
+              </a>
+            </li>
             <!-- Main -->
             <li class="menu-header fw-light mt-4">
               <span class="menu-header-text">Main</span>
             </li>
+    
             <!-- Banners -->
               <li class="menu-item <?= uri_string() == 'user/banners' ? 'active' : ''; ?>">
                 <a href="<?= site_url('user/banners')?>" class="menu-link">
@@ -259,7 +279,52 @@
                 <!--/ Style Switcher -->
 
                 <!-- User -->
-            
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="<?php echo base_url('assets/img/avatars/1.png')?>" alt="" class="w-px-40 h-auto rounded-circle">
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item waves-effect" href="pages-account-settings-account.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="<?php echo base_url('assets/img/avatars/1.png')?>" alt="" class="w-px-40 h-auto rounded-circle">
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block"><?= session()->get('username')?></span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                      <?php
+                          // Load model
+                          $model = new \App\Models\ModelOrganisasi();
+
+                          // Panggil metode di model untuk mendapatkan data
+                          $data = $model->where('id_pengguna_owner',session()->get('id_pengguna'))->get()->getResult();
+
+                        ?>
+                             <?php foreach($data as $d){ ?>
+                           <li>
+                      <a class="dropdown-item waves-effect" href="<?= site_url('user/set/'.$d->organisasi_kode) ?>">
+                        <i class="mdi mdi-lifebuoy me-2"></i>
+                        <span class="align-middle"><?= $d->organisasi_kode ?> | <?= $d->nama_organisasi ?> <?= session()->get('organisasi_kode') == $d->organisasi_kode ? "⭐":"" ?> </span>
+                      </a>
+                    </li>
+                    <?php }?>
+
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                  </ul>
+                </li>
                 <!--/ User -->
               </ul>
             </div>
@@ -281,7 +346,13 @@
           <div class="content-wrapper">
             <!-- Content -->
             <?= $this->renderSection('content') ?>
-         
+          <script>
+                          tinymce.init({
+                            selector: 'textarea',
+                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                          });
+                        </script>
             <!-- / Content -->
 
             <!-- Footer -->

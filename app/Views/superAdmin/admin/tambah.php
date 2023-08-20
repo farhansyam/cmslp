@@ -17,7 +17,7 @@
                             class="form-control"
                             name = "username"
                             id="basic-username"
-                            placeholder="landingpage"
+                            placeholder="."
                             aria-label="username"
                             aria-describedby="basic-username" />
                           <label for="basic-username">username</label>
@@ -28,7 +28,7 @@
                             type="password"
                             class="form-control"
                             id="basic-password"
-                            placeholder="landingpage"
+                            placeholder="."
                             aria-label="password"
                             aria-describedby="basic-password" />
                           <label for="basic-password">password</label>
@@ -39,7 +39,7 @@
                             class="form-control"
                             name = "nama_depan"
                             id="basic-nama_depan"
-                            placeholder="landingpage"
+                            placeholder="."
                             aria-label="nama_depan"
                             aria-describedby="basic-nama_depan" />
                           <label for="basic-nama_depan">nama_depan</label>
@@ -50,7 +50,7 @@
                             class="form-control"
                             name = "nama_belakang"
                             id="basic-nama_belakang"
-                            placeholder="landingpage"
+                            placeholder="."
                             aria-label="nama_belakang"
                             aria-describedby="basic-nama_belakang" />
                           <label for="basic-nama_belakang">nama_belakang</label>

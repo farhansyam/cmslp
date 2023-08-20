@@ -57,6 +57,15 @@
                           <label for="basic-no_handphone">No Handphone</label>
                       </div>
                       <div class="form-floating form-floating-outline">
+                        <select name="id_owner" id="" class="select2 form-select form-select-lg select2-hidden-accessible" data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
+                          <?php foreach($data as $datas) {?>
+                            <option value="<?=$datas['id_pengguna']?>"><?= $datas['username']?></option>
+                            <?php }?>
+                        </select>
+                      <label for="basic-no_handphone">Owner</label>
+                      </div>
+
+                      <div class="form-floating form-floating-outline">
                           <input
                             name="logo"
                             type="file"

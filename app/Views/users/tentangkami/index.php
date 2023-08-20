@@ -12,58 +12,58 @@
                   <div class="card mb-4">
                     <!-- <h5 class="card-header">General</h5> -->
                     <div class="card-body demo-vertical-spacing demo-only-element">
+                      <label>Visi</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="visi"
                             placeholder="Lorem ipsum"><?php echo $existingData['visi'] ?></textarea>
-                          <label>Visi</label>
                         </div>
                       </div>
+                      <label>Misi</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="misi"
                             placeholder="Lorem ipsum"><?php echo $existingData['misi'] ?></textarea>
-                          <label>Misi</label>
                         </div>
                       </div>
+                      <label>Motto</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="motto"
                             placeholder="Lorem ipsum"><?php echo $existingData['motto'] ?></textarea>
-                          <label>Motto</label>
                         </div>
                       </div>
+                      <label>Deskripsi 1</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="deskripsi_1"
                             placeholder="Lorem ipsum"><?php echo $existingData['deskripsi_1'] ?></textarea>
-                          <label>Deskripsi 1</label>
                         </div>
                       </div>
+                      <label>Deskripsi 2</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="deskripsi_2"
                             placeholder="Lorem ipsum"><?php echo $existingData['deskripsi_2'] ?></textarea>
-                          <label>Deskripsi 2</label>
                         </div>
                       </div>
+                      <label>Deskripsi Portofolio</label>
                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="deskripsi_portofolio"
                             placeholder="Lorem ipsum"><?php echo $existingData['deskripsi_portofolio'] ?></textarea>
-                          <label>Deskripsi Portofolio</label>
                         </div>
                       </div>
                      <label class="switch switch-danger">

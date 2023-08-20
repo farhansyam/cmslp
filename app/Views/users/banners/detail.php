@@ -1,5 +1,9 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"> Banners</h4>
@@ -50,7 +54,15 @@
                         <td><img width="180" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
                         <td>
                           <div class="dropdown">
+                                                                <?php if(session()->get('role_baku') == 1) {?>
+                              <a class="waves-effect" href="<?= site_url('superadmin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+                              <a class="waves-effect" href="<?= site_url('admin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+
+<?php  }else{?>
                               <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+  
+<?php  }?>
                           </div>
                         </td>
                       </tr>

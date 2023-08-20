@@ -28,6 +28,7 @@
                           <label for="basic-judulWebsite">Judul Website</label>
                       </div>
                       <div class="form-floating form-floating-outline">
+                       
                           <input
                             name="deskripsiSingkat"
                             type="text"
@@ -38,23 +39,23 @@
                             value="<?php echo $data['deskripsi_singkat'] ?>"
                             aria-describedby="basic-deskripsiSingkat" />
                           <label for="basic-deskripsiSingkat">Deskripsi Singkat</label>
-                      </div>
-                       <div class="input-group input-group-merge">
+                        </div>
+                        <label>Deskripsi Lengkap</label>
+                        <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="deskripsiLengkap"
                             placeholder="Lorem ipsum"><?php echo $data['deskripsi_lengkap'] ?></textarea>
-                          <label>Deskripsi Lengkap</label>
                         </div>
                       </div>
+                      <label>Alamat Lengkap</label>
                       <div class="input-group input-group-merge">
                         <div class="form-floating form-floating-outline">
                           <textarea
                             class="form-control h-px-75"
                             name ="alamatLengkap"
                             placeholder="Lorem ipsum"><?php echo $data['alamat_lengkap'] ?></textarea>
-                          <label>Alamat Lengkap</label>
                         </div>
                       </div>
                       <div class="form-floating form-floating-outline">

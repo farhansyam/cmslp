@@ -3,6 +3,8 @@
 namespace App\Controllers;
 use App\Models\Layanan;
 use App\Models\Gambar;
+use App\Models\ModelPengguna;
+use App\Models\ModelOrganisasi;
 
 class LayananController extends BaseController
 {
@@ -14,40 +16,63 @@ class LayananController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new Layanan();
+        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+            $ModelUser = new ModelPengguna();
+        $ModelOrganisasi = new ModelOrganisasi();
+        $layanan = $Model->get()->getResult();
+        foreach ($layanan as &$data) {
+            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $data->id_pengguna = $user;
+            $data->organisasi_kode = $organisasi;
+            
+        }
+    }else{
+        
         $layanan = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
-        return view('users/layanan/index',['layanan' => $layanan,'role'=>$role]);
     }
+    return view('users/layanan/index',['layanan' => $layanan,'role'=>$role]);
+}
 
-    function simpan(){
+function simpan(){
+        $image = $this->request->getFile('file');
+        if($image)
+                {
 
+                    $name = $image->getName();
+                    $image->move('uploads/layanan', $name);
+
+                $imageUpload = new Gambar();
+                $data = [
+                    "random_code" =>session()->get('random_code'),
+                    "gambar" => $name,
+                    "nama_sumber" => 'layanan',
+                ];
+                
+                $imageUpload->save($data);
+                return json_encode(array(
+                    "status" => 1,
+                    "gambar" => $name
+                ));
+            }
+        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+            $modelPengguna = new ModelPengguna;
+            $pengguna = $modelPengguna->where('organisasi_kode',$_POST['organisasi_kode'])->first();
+            $pengguna = $pengguna['id_pengguna'];
+            $organisasinya = $_POST['organisasi_kode'];
+        }else{
+            $pengguna = session()->get('id_pengguna');
+            $organisasinya = session()->get('organisasi_kode');
+        }
         
         $ban  = new Layanan();
-        $image = $this->request->getFile('file');
         
         $TenDigitRandomNumber = session()->get('random_code');
         
-        if($image)
-        {
-
-            $name = $image->getName();
-            $image->move('uploads/layanan', $name);
-
-		$imageUpload = new Gambar();
-		$data = [
-			"random_code" =>$TenDigitRandomNumber,
-			"gambar" => $name,
-            "nama_sumber" => 'layanan',
-		];
         
-        $imageUpload->save($data);
-        return json_encode(array(
-            "status" => 1,
-			"gambar" => $name
-		));
-    }
      $data = [
-                            'id_pengguna' => session()->get('id_pengguna'),
-                            'organisasi_kode' => session()->get('organisasi_kode'),
+                            'id_pengguna' => $pengguna,
+                            'organisasi_kode' => $organisasinya,
                             'judul_layanan'  => $_POST['judul_layanan'],
                             'deskripsi_1' => $_POST['deskripsi_1'],
                             'deskripsi_2' => $_POST['deskripsi_2'],
@@ -60,7 +85,15 @@ class LayananController extends BaseController
                         $Model->save($data);
                         
                     set_notif('success','berhasil','berhasil tambah layanan');
+                                    if(session()->get('role_baku') == 1){
+                        return redirect('superadmin/layanan');
+                                }elseif(session()->get('role_baku') == 2){
+                        return redirect('admin/layanan');
+
+                                }else{
                         return redirect('user/layanan');
+
+                                }
 
      
         } 
@@ -70,11 +103,12 @@ class LayananController extends BaseController
 
 
     function tambah() {
+        $ModelOrganisasi = new ModelOrganisasi;
         $randomCodeLength = 16;
         $randomCode = bin2hex(random_bytes($randomCodeLength));
-        $session = session();
-        $session->set('random_code', $randomCode);
-        return view('users/layanan/tambah');
+        session()->set('random_code', $randomCode);
+        $data1 = $ModelOrganisasi->findAll();
+        return view('users/layanan/tambah',['data1'=>$data1]);
     }
 
     public function hapus($id)
@@ -83,7 +117,18 @@ class LayananController extends BaseController
         $layanan = $Model->where('id_layanan',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus layanan');
+         if(session()->get('role_baku') == 1){ 
+        return redirect('superadmin/layanan');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+
+        return redirect('admin/layanan');
+
+ }else{ 
         return redirect('user/layanan');
+
+ } 
     }
     public function hapusgambar($id)
     {
@@ -93,7 +138,18 @@ class LayananController extends BaseController
         set_notif('success','berhasil','berhasil hapus layanan');
 
     // Get the previous URL
-    $previousURL = previous_url();
+   if(session()->get('role_baku') == 1){ 
+        return redirect('superadmin/layanan');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+
+        return redirect('admin/layanan');
+
+ }else{ 
+        return redirect('user/layanan');
+
+ } 
 
     // Redirect the user back to the previous page
     return redirect()->to($previousURL);
@@ -112,13 +168,12 @@ class LayananController extends BaseController
     }
 
     function update($id){
-               $ban  = new Layanan();
-        $data2 = $ban->where('id_pengguna',session()->get('id_pengguna'))->where('id_layanan',$id)->first();
+        $ban  = new Layanan();
+        $data2 = $ban->where('id_layanan',$id)->first();
         $image = $this->request->getFile('file');
         $gambar1 = new Gambar();
         $gambar2 = $gambar1->where('random_code',$data2['random_code'])->first();
         $TenDigitRandomNumber = $data2['random_code'];
-        
         if($image)
         {
 
@@ -140,8 +195,6 @@ class LayananController extends BaseController
     }
      $data = [
                             'id_layanan' => $id,
-                            'id_pengguna' => session()->get('id_pengguna'),
-                            'organisasi_kode' => session()->get('organisasi_kode'),
                             'judul_layanan'  => $_POST['judul_layanan'],
                             'deskripsi_1' => $_POST['deskripsi_1'],
                             'deskripsi_2' => $_POST['deskripsi_2'],
@@ -154,7 +207,15 @@ class LayananController extends BaseController
                         $Model->save($data);
                         
                     set_notif('success','berhasil','berhasil edit layanan');
+                              if(session()->get('role_baku') == 1){
+                        return redirect('superadmin/layanan');
+                                }elseif(session()->get('role_baku') == 2){
+                        return redirect('admin/layanan');
+
+                                }else{
                         return redirect('user/layanan');
+
+                                }
         }
     public function detail($id)
     {

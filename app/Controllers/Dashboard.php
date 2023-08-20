@@ -25,4 +25,12 @@ class Dashboard extends BaseController
         session()->destroy();
         return redirect()->to('login-admin');
     }
+
+    function setorganisasi($kode){
+        session()->set(['organisasi_kode' => $kode]);
+        return redirect()->back();
+    }
+
+
+
 }

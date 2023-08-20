@@ -17,13 +17,13 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                        <th>id pengguna</th>
+                        <th>Kode</th>
                         <th>nama</th>
                         <th>alamat</th>
                         <th>no telepon</th>
                         <th>no handphone</th>
                         <th>Logo</th>
-                        <th>Status</th>
+                        <!-- <th>Status</th> -->
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -33,18 +33,12 @@
                     foreach($organisasi as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
-                        <td><?= $d['id_pengguna_owner']?></td>
+                        <td><?= $d['organisasi_kode']?></td>
                         <td><?= $d['nama_organisasi']?></td>
                         <td><?= $d['alamat_organisasi']?></td>
                         <td><?= $d['no_telepon']?></td>
                         <td><?= $d['no_handphone']?></td>
-                        <td><img width="100" height="100" src="<?php echo base_url('uploads/client/'.$d['logo'])?>" alt="" srcset=""></td>
-                        <td><?php if($d['status'] == 1) {?>
-                        <span class="badge bg-label-success me-1">Active</span>
-                          <?php } else{?>
-                        <span class="badge bg-label-danger me-1">Deactive</span>
-                         <?php } ?>
-                        </td>
+                        <td><img width="50" height="50" src="<?php echo base_url('uploads/organisasi/'.$d['logo'])?>" alt="" srcset=""></td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

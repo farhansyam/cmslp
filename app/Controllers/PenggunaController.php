@@ -91,10 +91,19 @@ class PenggunaController extends BaseController
     }
 
     function update(){
+        if(!empty($_POST['password'])){
+            $pw = md5($_POST['password']);
+        }
+        else
+        {
+            $pw2 = new ModelPengguna();
+            $pw1 = $pw2->where('id_pengguna',$_POST['id'])->first();
+            $pw = $pw1['password'];
+        }
         $data = [
             'id_pengguna'  => $_POST['id'],
             'username' => $_POST['username'],
-            'password' => md5($_POST['passsword']),
+            'password' => $pw,
             'nama_depan' => $_POST['nama_depan'],
             'tempat_lahir' => $_POST['tempat_lahir'],
             'nama_belakang' => $_POST['nama_belakang'],

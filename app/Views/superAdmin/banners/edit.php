@@ -1,12 +1,25 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Tambah Banner Baru</h4>
  <?php if (isset($validation)): ?>
             <?= $validation ?>
-        <?php endif; ?>
-              <form action="<?= site_url('user/banners/simpan')?>" method="post" enctype="multipart/form-data">
+        <?php endif;  ?>
+        <?php if(session()->get('role_baku') == 1) {?>
+              <form action="<?= site_url('superadmin/banners/update/'.$banners['id_banner'])?>" method="post" enctype="multipart/form-data">
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+              <form action="<?= site_url('admin/banners/update/'.$banners['id_banner'])?>" method="post" enctype="multipart/form-data">
+
+<?php  }else{?>
+              <form action="<?= site_url('user/banners/update/'.$banners['id_banner'])?>" method="post" enctype="multipart/form-data">
+  
+<?php  }?>
               <div class="row">
                 <!-- Floating (Outline) -->
                 <div class="col-md-12">
@@ -21,7 +34,7 @@
                             id="basic-judul"
                             placeholder="landingpage"
                             aria-label="judul"
-                            value="<?= session()->getFlashdata('judul')?>"
+                            value="<?= $banners['judul'] ?>"
                             aria-describedby="basic-judul" />
                           <label for="basic-judul">Judul</label>
                       </div>
@@ -33,7 +46,7 @@
                             id="basic-deskripsi"
                             placeholder="landingpage"
                             aria-label="deskripsi"
-                            value="<?= session()->getFlashdata('deskripsi')?>"
+                            value="<?= $banners['deskripsi'] ?>"
                             aria-describedby="basic-deskripsi" />
                           <label for="basic-deskripsi">Deskripsi</label>
                       </div>
@@ -44,7 +57,7 @@
                             class="form-control"
                             id="basic-link"
                             placeholder="landingpage"
-                            value="<?= session()->getFlashdata('link')?>"
+                            value="<?= $banners['link'] ?>"
                             aria-label="link"
                             aria-describedby="basic-link" />
                           <label for="basic-link">Link</label>
@@ -55,7 +68,7 @@
                             type="text"
                             class="form-control"
                             id="basic-kategori"
-                            value="<?= session()->getFlashdata('kategori')?>"
+                            value="<?= $banners['kategori'] ?>"
                             placeholder="landingpage"
                             aria-label="kategori"
                             aria-describedby="basic-kategori" />
@@ -63,7 +76,7 @@
                       </div>
                             <label class="switch switch-danger">
                             <input type="hidden" name="status"  value="0">
-                            <input type="checkbox" name="status" <?php echo session()->getFlashdata('status') == 1 ? 'checked':''?> class="switch-input" value="1">
+                            <input type="checkbox" name="status" <?php echo $banners['status'] == 1 ? 'checked':''?> class="switch-input" value="1">
                             <span class="switch-toggle-slider">
                               <span class="switch-on"></span>
                               <span class="switch-off"></span>
@@ -72,6 +85,30 @@
                           </label>
                           <button type="submit" class="btn btn-primary" id="">Simpan Data</button>
                           <div id="myDropzone" class="dropzone"></div>
+                          <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th>No</th>
+                        <th>Gambar</th>
+                        <th>Opsi</th>
+                      </tr>
+                    </thead>
+                      <tbody class="table-border-bottom-0">
+                    <?php 
+                    $no = 1;
+                    foreach($dataGambar as $d) { ?>
+                           <tr>
+                        <td><?= $no++?></td>
+                        <td><img width="180" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
+                        <td>
+                          <div class="dropdown">
+                              <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                    </tbody>
+                  </table>
                       </form>
                          
                     </div>
@@ -83,7 +120,7 @@
         // Konfigurasi Dropzone
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#myDropzone", {
-            url: "<?= base_url('user/banners/simpan') ?>",
+            url: "<?= base_url('user/banners/update/'.$banners['id_banner']) ?>",
             autoProcessQueue: false,
             parallelUploads: 1, // Jumlah file yang diunggah secara bersamaan (opsional)
             maxFiles: 5, // Jumlah file maksimum yang diizinkan (opsional)

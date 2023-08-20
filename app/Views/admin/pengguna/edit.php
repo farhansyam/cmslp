@@ -27,7 +27,7 @@
                       </div>
                       <div class="form-floating form-floating-outline">
                           <input
-                            name="passsword"
+                            name="password"
                             type="passsword"
                             class="form-control"
                             id="basic-passsword"
@@ -188,9 +188,9 @@
                               <?php } ?>
                             </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="1" style="width: 664px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-select2Basic-container"><span class="select2-selection__rendered" id="select2-select2Basic-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div>
                         </div>
-                             <label class="switch switch-danger">
+                            <label class="switch switch-danger">
                             <input type="hidden" name="status"  value="0">
-                            <input type="checkbox" name="status" class="switch-input" value="1">
+                            <input type="checkbox" name="status" class="switch-input" <?=  $pengguna['status'] == 1 ? 'checked': '' ?> value="1">
                             <span class="switch-toggle-slider">
                               <span class="switch-on"></span>
                               <span class="switch-off"></span>

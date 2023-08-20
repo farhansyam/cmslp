@@ -12,7 +12,7 @@
   <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      content="width=device-width, initial-scale=1.0, superadmin-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Backend <?= uri_string()?></title>
 
@@ -23,6 +23,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <script src="https://cdn.tiny.cloud/1/duf9pa4i1whjydpvnv84103i11oib8me88cuq5t2csqql3dp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet" />
@@ -96,7 +98,7 @@
                         y1="0.849138"
                         x2="10.532"
                         y2="24.104"
-                        gradientUnits="userSpaceOnUse">
+                        gradientUnits="superadminSpaceOnUse">
                         <stop offset="0" stop-opacity="1" />
                         <stop offset="1" stop-opacity="0" />
                       </linearGradient>
@@ -106,7 +108,7 @@
                         y1="0.849139"
                         x2="10.3357"
                         y2="24.1155"
-                        gradientUnits="userSpaceOnUse">
+                        gradientUnits="superadminSpaceOnUse">
                         <stop offset="0" stop-opacity="1" />
                         <stop offset="1" stop-opacity="0" />
                       </linearGradient>
@@ -135,8 +137,8 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
-            <li class="menu-item <?= uri_string() == 'user' ? 'active' : ''; ?>">
-              <a href="<?= site_url('user')?>" class="menu-link">
+            <li class="menu-item <?= uri_string() == 'superadmin' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
               </a>
@@ -158,6 +160,96 @@
               <a href="<?= site_url('superadmin/role')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-contacts-outline"></i>
                 <div data-i18n="Role">Role</div>
+              </a>
+            </li>
+
+             <!-- Apps & Pages -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Core </span>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/pengaturan' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/pengaturan')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>
+                <div data-i18n="Pengaturan Website">Pengaturan Website</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/infokontak' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/infokontak')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-contacts-outline"></i>
+                <div data-i18n="Informasi Kontak">Informasi Kontak</div>
+              </a>
+            </li>
+            <li class="menu-item  <?= uri_string() == 'superadmin/tentang-kami' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/tentang-kami')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-information-outline"></i>
+                <div data-i18n="Tentang Kami">Tentang Kami</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/faq' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/faq')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-frequently-asked-questions"></i>
+                <div data-i18n="FAQ">FAQ</div>
+              </a>
+            </li>
+              <!-- Main -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Blog</span>
+            </li>
+ 
+            <!-- Blog -->
+            <li class="menu-item <?= uri_string() == 'superadmin/blog' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/blog')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-post"></i>
+                <div data-i18n="Artikel">Artikel</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/kategori' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/kategori')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-list-box"></i>
+                <div data-i18n="Kategori">Kategori</div>
+              </a>
+            </li>
+            <!-- Main -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Main</span>
+            </li>
+    
+            <!-- Banners -->
+              <li class="menu-item <?= uri_string() == 'superadmin/banners' ? 'active' : ''; ?>">
+                <a href="<?= site_url('superadmin/banners')?>" class="menu-link">
+                  <i class="menu-icon tf-icons mdi mdi-image-area"></i>
+                  <div data-i18n="Banners">Banners</div>
+                </a>
+              </li>
+            <!-- Icons -->
+            <li class="menu-item <?= uri_string() == 'superadmin/layanan' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/layanan')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-google-circles-extended"></i>
+                <div data-i18n="Layanan">Layanan</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/paket' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/paket')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-package"></i>
+                <div data-i18n="Packages">Packages</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/portofolio' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/portofolio')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-archive-outline"></i>
+                <div data-i18n="Portofolio">Portofolio</div>
+              </a>
+            </li>
+            <li class="menu-item  <?= uri_string() == 'superadmin/kerjasama-client' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/kerjasama-client')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-briefcase-outline"></i>
+                <div data-i18n="Client Work">Client Work</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/testimoni' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/testimoni')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-star-outline"></i>
+                <div data-i18n="Testimoni">Testimoni</div>
               </a>
             </li>
             <li class="menu-item">
@@ -199,9 +291,9 @@
                 </li>
                 <!--/ Style Switcher -->
 
-                <!-- User -->
+                <!-- superadmin -->
             
-                <!--/ User -->
+                <!--/ superadmin -->
               </ul>
             </div>
 
@@ -221,8 +313,14 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-            <?= $this->renderSection('content') ?>
-         
+           <?= $this->renderSection('content') ?>
+          <script>
+                          tinymce.init({
+                            selector: 'textarea',
+                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                          });
+                        </script>
             <!-- / Content -->
 
             <!-- Footer -->

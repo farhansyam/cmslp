@@ -1,12 +1,29 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
+
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-1 mb-3">Tambah Banner Baru</h4>
+              <h4 class="fw-bold py-1 mb-3">Edit Porto Baru</h4>
  <?php if (isset($validation)): ?>
             <?= $validation ?>
         <?php endif; ?>
-              <form action="<?= site_url('user/portofolio/update/'.$portofolio['id_portofolio'])?>" method="post" enctype="multipart/form-data">
+        <?php if(session()->get('role_baku') == 1){ ?>
+
+  <form action="<?= site_url('superadmin/portofolio/update/'.$portofolio['id_portofolio'])?>" method="post" enctype="multipart/form-data">
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+
+  <form action="<?= site_url('admin/portofolio/update/'.$portofolio['id_portofolio'])?>" method="post" enctype="multipart/form-data">
+
+<?php }else{ ?>
+  <form action="<?= site_url('user/portofolio/update/'.$portofolio['id_portofolio'])?>" method="post" enctype="multipart/form-data">
+
+<?php } ?>
+
               <div class="row">
                 <!-- Floating (Outline) -->
                 <div class="col-md-12">
@@ -28,10 +45,20 @@
                           foreach($dataGambar as $d) { ?>
                                 <tr>
                               <td><?= $no++?></td>
-                              <td><img width="180" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
+                              <td><img width="180" height="100" src="<?php echo base_url('uploads/portofolio/'.$d->gambar)?>" alt="" srcset=""></td>
                               <td>
                                 <div class="dropdown">
-                                    <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                                           <?php  if(session()->get('role_baku') == 1){  ?>
+        <a class="waves-effect" href="<?= site_url('superadmin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+
+ <?php }elseif(session()->get('role_baku') == 2){ ?>
+
+        <a class="waves-effect" href="<?= site_url('admin/gambar/hapus/')?><?=$gambar->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+
+ <?php }else{ ?>
+
+        <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$gambar->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+<?php } ?>
                                 </div>
                               </td>
                             </tr>
@@ -64,17 +91,16 @@
                             aria-describedby="basic-kategori_portofolio" />
                           <label for="basic-kategori_portofolio">kategori_portofolio</label>
                       </div>
+                      <label for="basic-deskripsi">Deskripsi</label>
                       <div class="form-floating form-floating-outline">
-                          <input
+                          <textarea
                             name="deskripsi"
                             type="text"
                             class="form-control"
                             id="basic-deskripsi"
                             placeholder="landingpage"
                             aria-label="deskripsi"
-                            value="<?= $portofolio['deskripsi'] ?>"
-                            aria-describedby="basic-deskripsi" />
-                          <label for="basic-deskripsi">Deskripsi</label>
+                            aria-describedby="basic-deskripsi" /><?= $portofolio['deskripsi'] ?></textarea>
                       </div>
                       <div class="form-floating form-floating-outline">
                           <input
@@ -147,7 +173,14 @@
         // Konfigurasi Dropzone
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#myDropzone", {
-            url: "<?= base_url('user/portofolio/update/'.$portofolio['id_portofolio']) ?>",
+            url: "<?php if(session()->get('role_baku') == 1 ){
+                echo base_url('superadmin/portofolio/update/'.$portofolio['id_portofolio']); 
+            }elseif(session()->get('role_baku') == 2){
+                echo base_url('admin/portofolio/update/'.$portofolio['id_portofolio']); 
+            }else{
+                echo base_url('user/portofolio/update/'.$portofolio['id_layanan']); 
+            }
+            ?>",
             autoProcessQueue: false,
             parallelUploads: 1, // Jumlah file yang diunggah secara bersamaan (opsional)
             maxFiles: 5, // Jumlah file maksimum yang diizinkan (opsional)

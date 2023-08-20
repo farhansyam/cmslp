@@ -59,7 +59,7 @@
                  
                       <label for="basic-embededGmap">Jenis Kelamin</label>
                       <div class="form-floating form-floating-outline">
-                          <select name="jenis_kelamin" id="">
+                          <select name="jenis_kelamin" id="" class="select2 form-select form-select-lg select2-hidden-accessible" data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
                             <option value="laki-laki">laki-laki</option>
                             <option value="perempuan">perempuan</option>
                           </select>

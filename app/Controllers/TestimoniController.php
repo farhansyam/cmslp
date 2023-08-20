@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 use App\Models\Testimoni;
+use App\Models\ModelPengguna;
+use App\Models\ModelOrganisasi;
 
 class TestimoniController extends BaseController
 {
@@ -13,7 +15,32 @@ class TestimoniController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new Testimoni();
-        $testimoni = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+         if(session()->get('role_baku') == 1){ 
+     $testimoni = $Model->get()->getResult();
+    $ModelUser = new ModelPengguna();
+            $ModelOrganisasi = new ModelOrganisasi();
+            foreach ($testimoni as $data) {
+                $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+                $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+                $data->id_pengguna = $user;
+                $data->organisasi_kode = $organisasi;
+        }
+
+ }elseif(session()->get('role_baku') == 2){ 
+
+     $testimoni = $Model->get()->getResult();
+     $ModelUser = new ModelPengguna();
+            $ModelOrganisasi = new ModelOrganisasi();
+            foreach ($testimoni as $data) {
+                $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+                $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+                $data->id_pengguna = $user;
+                $data->organisasi_kode = $organisasi;
+        }
+ }else{ 
+
+     $testimoni = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
+ } 
         return view('users/testimoni/index',['testimoni' => $testimoni,'role'=>$role]);
     }
 
@@ -28,6 +55,8 @@ class TestimoniController extends BaseController
                 $namegambar = $foto->getName();
                  $foto->move('uploads/testimoni', $namegambar);
                 // Simpan data ke database menggunakan model
+                $model = new ModelOrganisasi();
+                $user = $model->where('organisasi_kode',$this->request->getPost('organisasi_kode'))->first();
                 $testimoniClientModel = new Testimoni();
                 $testimoniClientModel->save([
                     'nama' => $nama,
@@ -36,17 +65,32 @@ class TestimoniController extends BaseController
                     'rating' => $rating,
                     'foto' => $namegambar,
                     'status' => $status,
-                    'organisasi_kode' => session()->get('organisasi_kode'),
+                    'organisasi_kode' => $this->request->getPost('organisasi_kode'),
+                    'id_pengguna' => $user['id_pengguna_owner'],
                 ]);
                   set_notif('success','berhasil','berhasil tambah testimoni');
+                   if(session()->get('role_baku') == 1){ 
+
+                  return redirect('superadmin/testimoni');
+
+ }elseif(session()->get('role_baku') == 2){ 
+                  return redirect('admin/testimoni');
+
+
+ }else{ 
                   return redirect('user/testimoni');
+
+ } 
       
 
 
+        return redirect()->back();
     }
 
     function tambah() {
-        return view('users/testimoni/tambah');
+         $ModelOrganisasi = new ModelOrganisasi;
+        $data1 = $ModelOrganisasi->findAll();
+        return view('users/testimoni/tambah',['data1'=>$data1]);
     }
 
     public function hapus($id)
@@ -80,7 +124,7 @@ class TestimoniController extends BaseController
                 $status = $this->request->getPost('status');
                 $namegambar = $foto->getName();
                 
-                 $logoClient->move('uploads/client', $namegambar);
+                 $logoClient->move('uploads/testimoni', $namegambar);
                 
                 // Simpan data ke database menggunakan model
                 $testimoniClientModel = new Testimoni();
@@ -118,7 +162,15 @@ class TestimoniController extends BaseController
         }
     
         set_notif('success','berhasil','berhasil edit data testimoni');
-        return redirect('user/testimoni');
+                   if(session()->get('role_baku') == 1){
+                        return redirect('superadmin/testimoni');
+                                }elseif(session()->get('role_baku') == 2){
+                        return redirect('admin/testimoni');
+
+                                }else{
+                        return redirect('user/testimoni');
+
+                                }
 
 
     }
