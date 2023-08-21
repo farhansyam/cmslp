@@ -14,7 +14,7 @@
   <form action="<?= site_url('superadmin/kerjasama-client/update')?>" method="post" enctype="multipart/form-data">
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-  <form action="<?= site_url('admin/kerjasama-client/update')?>" method="post" enctype="multipart/form-data">
+  <form action="<?= site_url('admins/kerjasama-client/update')?>" method="post" enctype="multipart/form-data">
 
 
 <?php }else{ ?>

@@ -85,7 +85,15 @@ class kategoriController extends BaseController
         $Model = new Kategori();
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah kategori');
-        return redirect('superadmin/kategori');
+               if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/kategori');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/kategori');
+
+
+ }
 
 
     }
@@ -100,7 +108,15 @@ class kategoriController extends BaseController
         $kategori = $Model->where('id_kategori',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus kategori');
-        return redirect('superadmin/kategori');
+                       if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/kategori');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/kategori');
+
+
+ };
     }
 
       public function SAedit($id)
@@ -121,8 +137,15 @@ class kategoriController extends BaseController
         $Model = new Kategori();
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit kategori');
-        return redirect('superadmin/kategori');
+                       if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/kategori');
 
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/kategori');
+
+
+ }
 
     }
 

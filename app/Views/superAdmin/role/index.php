@@ -22,8 +22,8 @@
                         <th>Read Data</th>
                         <th>Update Data</th>
                         <th>Delete Data</th>
-                        <th>All Organisasi</th>
-                        <th>List Organisasi</th>
+                        <!-- <th>All Organisasi</th> -->
+                        <!-- <th>List Organisasi</th> -->
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -59,8 +59,8 @@
                         <span class="badge bg-label-danger me-1">N</span>
                          <?php } ?>
                         </td>
-                        <td><?= $d['all_organisasi']?></td>
-                        <td><?= $d['list_organisasi']?></td>
+                        <!-- <td>< //?= $d['all_organisasi']?></td> -->
+                        <!-- <td><//?= $d['list_organisasi']?></td> -->
                         <td><?php if($d['status'] == 1) {?>
                         <span class="badge bg-label-success me-1">Active</span>
                           <?php } else{?>

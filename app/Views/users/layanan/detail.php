@@ -55,7 +55,7 @@
                                                                 <?php if(session()->get('role_baku') == 1) {?>
                               <a class="waves-effect" href="<?= site_url('superadmin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-                              <a class="waves-effect" href="<?= site_url('admin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <a class="waves-effect" href="<?= site_url('admins/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
 
 <?php  }else{?>
                               <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>

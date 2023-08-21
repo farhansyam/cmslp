@@ -17,13 +17,27 @@ class PortofolioController extends BaseController
         
         $role = $this->getRoleData();
         $Model = new Portofolio();
+        
         if(session()->get('role_baku') == 1){ 
             $protofolio = $Model->get()->getResult();
+               $ModelUser = new ModelPengguna();
+        $ModelOrganisasi = new ModelOrganisasi();
+        foreach ($protofolio as &$data) {
+            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $data->id_pengguna = $user;
+            $data->organisasi_kode = $organisasi; }
 
 
         }elseif(session()->get('role_baku') == 2){ 
-            
             $protofolio = $Model->get()->getResult();
+               $ModelUser = new ModelPengguna();
+        $ModelOrganisasi = new ModelOrganisasi();
+        foreach ($protofolio as &$data) {
+            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $data->id_pengguna = $user;
+            $data->organisasi_kode = $organisasi; }
             
         }else{ 
             
@@ -91,7 +105,7 @@ class PortofolioController extends BaseController
 
                         }elseif(session()->get('role_baku') == 2){ 
 
-                            return redirect('admin/portofolio');
+                            return redirect('admins/portofolio');
 
                         }else{ 
 
@@ -127,7 +141,7 @@ class PortofolioController extends BaseController
              return redirect('superadmin/portofolio');
 
  }elseif(session()->get('role_baku') == 2){ 
-        return redirect('admin/portofolio');
+        return redirect('admins/portofolio');
 
  }else{ 
         return redirect('user/portofolio');
@@ -208,7 +222,7 @@ class PortofolioController extends BaseController
 
                         }elseif(session()->get('role_baku') == 2){ 
 
-                            return redirect('admin/portofolio');
+                            return redirect('admins/portofolio');
 
                         }else{ 
 

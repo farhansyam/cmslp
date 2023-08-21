@@ -20,7 +20,7 @@
            
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-                      <a href="<?= site_url('admin/layanan/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                      <a href="<?= site_url('admins/layanan/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
             
 
 <?php  }else{?>
@@ -56,8 +56,11 @@
                            <tr>
                         <td><?= $no++?></td>
                        
-                          <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
-                          <td><a href="<?= site_url('superadmin/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
+                          <?php if(session()->get('role_baku') == 1 ){?>
+                            <td><a href="<?= site_url('superadmin/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
+                          
+                            <?php } if(session()->get('role_baku') == 2) {?>
+                            <td><a href="<?= site_url('admins/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
 
                         <?php } else { ?>
                           <td><a href="<?= site_url('user/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
@@ -91,8 +94,8 @@
 
                         <?php }elseif(session()->get('role_baku') == 2){ ?>
 <?php  if($role['delete_data'] == "Y") { ?>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/layanan/edit/')?><?=$d->id_layanan?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/layanan/hapus/')?><?=$d->id_layanan?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/layanan/edit/')?><?=$d->id_layanan?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/layanan/hapus/')?><?=$d->id_layanan?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
                               <?php }?>
                       <?php  }else { ?>
                               <?php  if($role['delete_data'] == "Y") { ?>

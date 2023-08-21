@@ -90,7 +90,15 @@ class InformasiKontakController extends BaseController
         $Model = new PengaturanWebsite();
         $Model->save($data);
         set_notif('success','berhasil','berhasil ubah informasi kontak');
-        return redirect('superadmin/infokontak');
+        if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/infokontak');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/infokontak');
+
+
+ }
 
 
     }

@@ -41,12 +41,6 @@ class BlogController extends BaseController
 
             
             $foto = $this->request->getFile('foto_artikel');
-            $maxWidth = 350;
-                $maxHeight = 350;
-                $minWidth = 270;
-                $minHeight = 270;
-              [$width, $height] = getimagesize($foto);
-                if ($width <= $maxWidth && $height <= $maxHeight && $width >= $minWidth && $height >= $minHeight) {
                     $name = $foto->getName();
                  $foto->move('uploads/blog', $name);
 
@@ -68,16 +62,24 @@ class BlogController extends BaseController
                 'waktu_simpan_data' => date('Y-m-d H:i:s'),
                 'status' => $this->request->getPost('status'),
             ]);
-                } else {
-                    $data['validation'] = "Invalid image dimensions. Please upload an image with dimensions between {$minWidth}x{$minHeight} and {$maxWidth}x{$maxHeight} pixels.";
-                }
                 
 
             // Redirect atau berikan respons sukses
         }
 
         // Tampilkan formulir input
-        return redirect('user/blog');
+        if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
+
+ } 
     }
 
      public function edit($id)
@@ -109,11 +111,6 @@ class BlogController extends BaseController
 
                               $foto = $this->request->getFile('foto_artikel');
                               $maxWidth = 350;
-                $maxHeight = 350;
-                $minWidth = 270;
-                $minHeight = 270;
-              [$width, $height] = getimagesize($foto);
-                if ($width <= $maxWidth && $height <= $maxHeight && $width >= $minWidth && $height >= $minHeight) {
                     $name = $foto->getName();
                 $name = $foto->getName();
                  $foto->move('uploads/blog', $name);
@@ -140,10 +137,8 @@ class BlogController extends BaseController
                 
             
 
-        }else{
-              set_notif('warning','Note','Ukuran gambar max 350 min 270!');
         return redirect()->back();
-        }}
+        }
         else{
               $slug = $this->request->getPost('judul_artikel');
               $slug = str_replace(' ', '-', $slug);
@@ -207,12 +202,6 @@ class BlogController extends BaseController
 
             
             $foto = $this->request->getFile('foto_artikel');
-            $maxWidth = 350;
-                $maxHeight = 350;
-                $minWidth = 270;
-                $minHeight = 270;
-              [$width, $height] = getimagesize($foto);
-                if ($width <= $maxWidth && $height <= $maxHeight && $width >= $minWidth && $height >= $minHeight) {
                     $name = $foto->getName();
                  $foto->move('uploads/blog', $name);
   $modelPengguna = new ModelPengguna;
@@ -235,18 +224,24 @@ class BlogController extends BaseController
                 'waktu_simpan_data' => date('Y-m-d H:i:s'),
                 'status' => $this->request->getPost('status'),
             ]);
-                } else {
-                  set_notif('warning','Note',"Ukuran gambar min x{$minWidth} max x{$maxWidth}!");
-                    
-                    $data['validation'] = "Invalid image dimensions. Please upload an image with dimensions between x{$minHeight} and x{$maxHeight} pixels.";
-                }
                 
 
             // Redirect atau berikan respons sukses
         }
 
         // Tampilkan formulir input
-        return redirect('superadmin/blog');
+            if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
+
+ } 
     }
 
      public function SAedit($id)
@@ -277,12 +272,6 @@ class BlogController extends BaseController
         {   
 
                               $foto = $this->request->getFile('foto_artikel');
-                              $maxWidth = 350;
-                $maxHeight = 350;
-                $minWidth = 270;
-                $minHeight = 270;
-              [$width, $height] = getimagesize($foto);
-                if ($width <= $maxWidth && $height <= $maxHeight && $width >= $minWidth && $height >= $minHeight) {
                     $name = $foto->getName();
                 $name = $foto->getName();
                  $foto->move('uploads/blog', $name);
@@ -307,10 +296,19 @@ class BlogController extends BaseController
                 
             
 
-        }else{
-              set_notif('warning','Note','Ukuran gambar max 350 min 270!');
-        return redirect()->back();
-        }}
+          if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
+
+ } 
+        }
         else{
               $slug = $this->request->getPost('judul_artikel');
               $slug = str_replace(' ', '-', $slug);
@@ -331,7 +329,18 @@ class BlogController extends BaseController
         }
     
         set_notif('success','berhasil','berhasil edit data blog');
-        return redirect('superadmin/blog');
+              if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
+
+ } 
 
         
     }

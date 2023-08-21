@@ -6,7 +6,7 @@
 
               <form action="<?= site_url('user/blog/update')?>" enctype="multipart/form-data" method="post">
               <div class="row">
-                <input type="hidden" name="id" value="<?= $id_blog_artikel?>">
+                <input type="hidden" name="id" value="<?= $blog{'id_blog_artikel'}?>">
                 <!-- Floating (Outline) -->
                 <div class="col-md-12">
                   <div class="card mb-4">
@@ -46,7 +46,6 @@
                               <?php } ?>
                             </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="1" style="width: 664px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-select2Basic-container"><span class="select2-selection__rendered" id="select2-select2Basic-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div>
                         </div>
-                      </div>
                       <div class="form-floating form-floating-outline">
                           <input
                           requited
@@ -89,11 +88,11 @@
                       </div>
                         <label for="basic-Jawaban">Gambar Sebelumnya</label>
                       <div class="form-floating form-floating-outline">
-                        <td><img width="180" height="180" src="<?php echo base_url('uploads/blog/'.$foto_artikel)?>" alt="" srcset=""></td>
+                        <td><img width="180" height="180" src="<?php echo base_url('uploads/blog/'.$blog['foto_artikel'])?>" alt="" srcset=""></td>
 </div>
                             <label class="switch switch-danger">
                             <input type="hidden" name="status"  value="0">
-                            <input type="checkbox" name="status" class="switch-input" <?=  $status == 1 ?  'checked': '' ?> value="1">
+                            <input type="checkbox" name="status" class="switch-input" <?=  $blog['status'] == 1 ?  'checked': '' ?> value="1">
                             <span class="switch-toggle-slider">
                               <span class="switch-on"></span>
                               <span class="switch-off"></span>

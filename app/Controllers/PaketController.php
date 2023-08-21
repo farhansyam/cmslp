@@ -66,7 +66,7 @@ class PaketController extends BaseController
             if(session()->get('role_baku') == 1){
                 return redirect('superadmin/paket');
             }elseif(session()->get('role_baku') == 2){
-                return redirect('admin/paket');
+                return redirect('admins/paket');
             }else{
                 return redirect('user/paket');
             }
@@ -94,7 +94,7 @@ class PaketController extends BaseController
          if(session()->get('role_baku') == 1){
                 return redirect('superadmin/paket');
             }elseif(session()->get('role_baku') == 2){
-                return redirect('admin/paket');
+                return redirect('admins/paket');
             }else{
                 return redirect('user/paket');
             }
@@ -126,7 +126,7 @@ class PaketController extends BaseController
          if(session()->get('role_baku') == 1){
                 return redirect('superadmin/paket');
             }elseif(session()->get('role_baku') == 2){
-                return redirect('admin/paket');
+                return redirect('admins/paket');
             }else{
                 return redirect('user/paket');
             }

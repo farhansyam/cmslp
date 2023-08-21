@@ -1,5 +1,9 @@
-<?php $this->extend('layout/SuperAdmin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"> Data Info Kontak web semua user</h4>
@@ -31,7 +35,17 @@
                         <td><?= $d['organisasi_kode']['organisasi_kode']?></td>
                         <td>
                           <div class="dropdown">
+                            <?php if(session()->get('role_baku') == 1){ ?>
+
                               <a class="dropdown-item waves-effect" href="<?= site_url('superadmin/infokontak/edit/')?><?=$d['id_pengaturan_website']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+
+                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/infokontak/edit/')?><?=$d['id_pengaturan_website']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+
+<?php }else{ ?>
+
+<?php } ?>
                           </div>
                         </td>
                       </tr>

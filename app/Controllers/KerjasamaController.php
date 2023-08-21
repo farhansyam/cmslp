@@ -19,10 +19,23 @@ class KerjasamaController extends BaseController
 
         if(session()->get('role_baku') == 1){ 
      $kerjasama =  $Model->get()->getResult();
+        $kerjasama =  $Model->get()->getResult();
+        $ModelOrganisasi = new ModelOrganisasi();
+        foreach ($kerjasama as &$data) {
+            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $data->id_pengguna = $user;
+            $data->organisasi_kode = $organisasi; }
 
  }elseif(session()->get('role_baku') == 2){ 
-
-     $kerjasama =  $Model->get()->getResult();
+   $ModelUser = new ModelPengguna();
+   $kerjasama =  $Model->get()->getResult();
+        $ModelOrganisasi = new ModelOrganisasi();
+        foreach ($kerjasama as &$data) {
+            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
+            $data->id_pengguna = $user;
+            $data->organisasi_kode = $organisasi; }
 
  }else{ 
      $kerjasama =  $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
@@ -58,6 +71,7 @@ class KerjasamaController extends BaseController
                 $kerjasamaClientModel = new KerjasamaClient();
                 $kerjasamaClientModel->save([
                     'nama_client' => $namaClient,
+                    'id_pengguna' => $pengguna,
                     'logo_client' => $name,
                     'organisasi_kode' => $organisasinya,
                     'status' => $status,
@@ -70,7 +84,7 @@ class KerjasamaController extends BaseController
 
  }elseif(session()->get('role_baku') == 2){ 
 
-     return redirect('admin/kerjasama-client');
+     return redirect('admins/kerjasama-client');
 
  }else{ 
 
@@ -104,7 +118,7 @@ class KerjasamaController extends BaseController
 
  }elseif(session()->get('role_baku') == 2){ 
 
-     return redirect('admin/kerjasama-client');
+     return redirect('admins/kerjasama-client');
 
  }else{ 
 
@@ -164,7 +178,7 @@ class KerjasamaController extends BaseController
 
  }elseif(session()->get('role_baku') == 2){ 
 
-     return redirect('admin/kerjasama-client');
+     return redirect('admins/kerjasama-client');
 
  }else{ 
 

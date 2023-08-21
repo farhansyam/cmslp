@@ -162,7 +162,18 @@
                 <div data-i18n="Role">Role</div>
               </a>
             </li>
-
+ <li class="menu-item <?= uri_string() == 'superadmin/organisasi' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/organisasi')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>
+                <div data-i18n="Data Organisasi">Data Organisasi</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'superadmin/pengguna' ? 'active' : ''; ?>">
+              <a href="<?= site_url('superadmin/pengguna')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-contacts-outline"></i>
+                <div data-i18n="Data Pengguna">Data Pengguna</div>
+              </a>
+            </li>
              <!-- Apps & Pages -->
             <li class="menu-header fw-light mt-4">
               <span class="menu-header-text">Core </span>

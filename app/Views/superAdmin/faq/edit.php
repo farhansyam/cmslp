@@ -1,10 +1,23 @@
-<?php $this->extend('layout/SuperAdmin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
-
+       <?php if(session()->get('role_baku') == 1){ ?>
               <form action="<?= site_url('superadmin/faq/update')?>" method="post">
+
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+              <form action="<?= site_url('admins/faq/update')?>" method="post">
+
+
+<?php }else{ ?>
+
+<?php } ?>
               <input type="hidden" name="id" value="<?= $id_faq?>">
               <div class="row">
                 <!-- Floating (Outline) -->

@@ -46,6 +46,26 @@ class TestimoniController extends BaseController
 
     function simpan(){
                 // Ambil data dari form
+                $user = new ModelOrganisasi();
+                $u = $user->where('organisasi_kode',$_POST['organisasi_kode'])->first();
+
+                 if(session()->get('role_baku') == 1){ 
+                    
+                    $idp = $u['id_pengguna_owner'];
+                    $ok = $this->request->getPost('organisasi_kode');
+
+ }elseif(session()->get('role_baku') == 2){ 
+
+                    $idp = $u['id_pengguna_owner'];
+                    $ok = $this->request->getPost('organisasi_kode');
+
+
+ }else{ 
+                    $idp = session()->get('id_pengguna');
+                    $ok = session()->get('organisasi_kode');
+
+
+ } 
                 $foto = $this->request->getFile('foto');
                 $nama = $this->request->getPost('nama');
                 $instansi = $this->request->getPost('instansi');
@@ -65,8 +85,8 @@ class TestimoniController extends BaseController
                     'rating' => $rating,
                     'foto' => $namegambar,
                     'status' => $status,
-                    'organisasi_kode' => $this->request->getPost('organisasi_kode'),
-                    'id_pengguna' => $user['id_pengguna_owner'],
+                    'organisasi_kode' => $ok,
+                    'id_pengguna' => $idp,
                 ]);
                   set_notif('success','berhasil','berhasil tambah testimoni');
                    if(session()->get('role_baku') == 1){ 
@@ -74,7 +94,7 @@ class TestimoniController extends BaseController
                   return redirect('superadmin/testimoni');
 
  }elseif(session()->get('role_baku') == 2){ 
-                  return redirect('admin/testimoni');
+                  return redirect('admins/testimoni');
 
 
  }else{ 
@@ -99,7 +119,18 @@ class TestimoniController extends BaseController
         $testimoni = $Model->where('id_testimoni',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus testimoni');
-        return redirect('user/testimoni');
+                   if(session()->get('role_baku') == 1){ 
+
+                  return redirect('superadmin/testimoni');
+
+ }elseif(session()->get('role_baku') == 2){ 
+                  return redirect('admins/testimoni');
+
+
+ }else{ 
+                  return redirect('user/testimoni');
+
+ } 
     }
 
       public function edit($id)
@@ -165,7 +196,7 @@ class TestimoniController extends BaseController
                    if(session()->get('role_baku') == 1){
                         return redirect('superadmin/testimoni');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/testimoni');
+                        return redirect('admins/testimoni');
 
                                 }else{
                         return redirect('user/testimoni');

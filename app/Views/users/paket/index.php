@@ -18,7 +18,7 @@
                         <a href="<?= site_url('superadmin/paket/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
                         
                      <?php }elseif(session()->get('role_baku') == 2){ ?>
-                        <a href="<?= site_url('admin/paket/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                        <a href="<?= site_url('admins/paket/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
                      <?php }else{ ?>
                         <a href="<?= site_url('user/paket/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
                       
@@ -31,6 +31,10 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
+                         <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <th>Owner</th>
+                        <th>Organisasi</th>
+                        <?php }  ?>
                         <th>Judul</th>
                         <th>Jenis</th>
                         <th>deskripsi</th>
@@ -47,6 +51,10 @@
                     foreach($paket as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
+                          <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <th><?= $d->id_pengguna['username']?></th>
+                        <th><?= $d->organisasi_kode['nama_organisasi'] ?></th>
+                        <?php } ?>
                         <td><?= $d->judul_paket?></td>
                         <td><?= $d->jenis_paket?></td>
                         <td><?= $d->harga?></td>
@@ -74,9 +82,9 @@
                      <?php }elseif(session()->get('role_baku') == 2){ ?>
                       
                          <?php if($role['update_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('admin/paket/edit/')?><?=$d->id_paket?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/paket/edit/')?><?=$d->id_paket?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
             <?php } if($role['delete_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('admin/paket/hapus/')?><?=$d->id_paket?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/paket/hapus/')?><?=$d->id_paket?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
                     <?php } ?>
                     <?php }else{ ?>
                          <?php if($role['update_data'] == 'Y') {?>

@@ -20,7 +20,7 @@
            
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-                      <a href="<?= site_url('admin/banners/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                      <a href="<?= site_url('admins/banners/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
             
 
 <?php  }else{?>

@@ -135,7 +135,6 @@ class PengaturanWebsiteController extends BaseController
             $organisasi = $ModelOrganisasi->where('organisasi_kode',$data['organisasi_kode'])->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
             $data['id_pengguna'] = $user;
             $data['organisasi_kode'] = $organisasi; }
-        
         return view('superAdmin/pengaturanweb/index',['data' => $existingData,'role' => $role]);
     }
 

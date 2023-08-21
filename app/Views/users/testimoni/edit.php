@@ -14,7 +14,7 @@
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
 
-  <form action="<?= site_url('admin/testimoni/update')?>" enctype="multipart/form-data" method="post">
+  <form action="<?= site_url('admins/testimoni/update')?>" enctype="multipart/form-data" method="post">
 
 <?php }else{ ?>
 
@@ -62,7 +62,7 @@
                             id="basic-testimoni"
                             placeholder="Bagus sekali"
                             aria-label="testimoni"
-                            value = <?= $testimoni ?>
+                            value =" <?= $testimoni ?>"
                             aria-describedby="basic-testimoni" />
                           <label for="basic-testimoni">Testimoni</label>
                       </div>

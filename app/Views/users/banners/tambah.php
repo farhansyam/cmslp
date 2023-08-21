@@ -14,7 +14,7 @@
               <form  method="post" action="<?= site_url('superadmin/banners/simpan')?>" enctype="multipart/form-data">
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-              <form action="<?= site_url('admin/banners/simpan')?>" method="post" enctype="multipart/form-data">
+              <form action="<?= site_url('admins/banners/simpan')?>" method="post" enctype="multipart/form-data">
 
 <?php  }else{?>
               <form action="<?= site_url('user/banners/simpan')?>" method="post" enctype="multipart/form-data">
@@ -110,7 +110,7 @@
             url: "<?php if(session()->get('role_baku') == 1 ){
                 echo base_url('superadmin/banners/simpan'); 
             }elseif(session()->get('role_baku') == 2){
-                echo base_url('admin/banners/simpan'); 
+                echo base_url('admins/banners/simpan'); 
             }else{
                 echo base_url('user/banners/simpan'); 
             

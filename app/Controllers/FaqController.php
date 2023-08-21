@@ -88,7 +88,15 @@ class FaqController extends BaseController
         $Model = new Faq();
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah Faq');
-        return redirect('superadmin/faq');
+        if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/faq');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/faq');
+
+
+ }
 
 
     }
@@ -106,7 +114,15 @@ class FaqController extends BaseController
         $faq = $Model->where('id_faq',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus Faq');
-        return redirect('superadmin/faq');
+              if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/faq');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/faq');
+
+
+ }
     }
 
       public function SAedit($id)
@@ -128,7 +144,15 @@ class FaqController extends BaseController
         $Model = new Faq();
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit Faq');
-        return redirect('superadmin/faq');
+             if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/faq');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/faq');
+
+
+ }
 
 
     }

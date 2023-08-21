@@ -1,4 +1,9 @@
-<?php $this->extend('layout/admin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
+
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,7 +14,19 @@
                 <div class="table-responsive text-wrap">
                 <div class="card-body">
                       <div class="demo-inline-spacing">
-                        <a href="<?= site_url('admins/organisasi/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                                              <?php if(session()->get('role_baku') == 1) {?>
+                      <a href="<?= site_url('superadmin/organisasi/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+           
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+                      <a href="<?= site_url('admins/organisasi/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+            
+
+<?php  }else{?>
+                      <a href="<?= site_url('user/organisasi/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+             
+  
+<?php  }?>
                       </div>
                     </div>
 
@@ -45,9 +62,23 @@
                               <i class="mdi mdi-dots-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/organisasi/edit/')?><?=$d['id']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <?php if(session()->get('role_baku') == 1){ ?>
+ <a class="dropdown-item waves-effect" href="<?= site_url('superadmin/organisasi/edit/')?><?=$d['id']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('superadmin/organisasi/hapus/')?><?=$d['id']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                            
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+ <a class="dropdown-item waves-effect" href="<?= site_url('admins/organisasi/edit/')?><?=$d['id']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
                               <a class="dropdown-item waves-effect" href="<?= site_url('admins/organisasi/hapus/')?><?=$d['id']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-                            </div>
+                            
+
+<?php }else{ ?>
+ <a class="dropdown-item waves-effect" href="<?= site_url('user/organisasi/edit/')?><?=$d['id']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('user/organisasi/hapus/')?><?=$d['id']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                            
+<?php } ?>
+
+                             </div>
                           </div>
                         </td>
                       </tr>

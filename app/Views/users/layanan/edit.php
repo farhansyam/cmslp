@@ -14,7 +14,7 @@
               <form action="<?= site_url('superadmin/layanan/update/'.$layanan['id_layanan'])?>" method="post" enctype="multipart/form-data">
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-              <form action="<?= site_url('admin/layanan/update/'.$layanan['id_layanan'])?>" method="post" enctype="multipart/form-data">
+              <form action="<?= site_url('admins/layanan/update/'.$layanan['id_layanan'])?>" method="post" enctype="multipart/form-data">
 
 <?php  }else{?>
               <form action="<?= site_url('user/layanan/update/'.$layanan['id_layanan'])?>" method="post" enctype="multipart/form-data">
@@ -93,7 +93,7 @@
 
  <?php }elseif(session()->get('role_baku') == 2){ ?>
 
-        <a class="waves-effect" href="<?= site_url('admin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+        <a class="waves-effect" href="<?= site_url('admins/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
 
  <?php }else{ ?>
 
@@ -119,7 +119,7 @@
              url: "<?php if(session()->get('role_baku') == 1 ){
                 echo base_url('superadmin/layanan/update/'.$layanan['id_layanan']); 
             }elseif(session()->get('role_baku') == 2){
-                echo base_url('admin/layanan/update/'.$layanan['id_layanan']); 
+                echo base_url('admins/layanan/update/'.$layanan['id_layanan']); 
             }else{
                 echo base_url('user/layanan/update/'.$layanan['id_layanan']); 
             }

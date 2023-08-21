@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 use App\Models\ModelOrganisasi;
+use App\Models\PengaturanWebsite;
 use App\Models\ModelPengguna;
+use App\Models\TentangKami;
 
 class OrganisasiController extends BaseController
 {
@@ -31,11 +33,22 @@ class OrganisasiController extends BaseController
                 $status = $this->request->getPost('status');
                 $name = $logo->getName();
                  $logo->move('uploads/organisasi', $name);
+                 $kodex = mt_rand(111111,999999);
+                 $modelPengaturan = new PengaturanWebsite();
+                 $modelPengaturan->save([
+                    'organisasi_kode' => $kodex,
+                    'id_pengguna' => $this->request->getPost('id_owner')
+                 ]);
+                 $modelAbout = new TentangKami();
+                 $modelAbout->save([
+                    'organisasi_kode' => $kodex,
+                    'id_pengguna' => $this->request->getPost('id_owner')
+                 ]);
 
                 // Simpan data ke database menggunakan model
                 $organisasiClientModel = new ModelOrganisasi;
                 $organisasiClientModel->save([
-                    'organisasi_kode' => mt_rand(111111,999999),
+                    'organisasi_kode' => $kodex,
                     'id_pengguna_owner' => $this->request->getPost('id_owner'),
                     'nama_organisasi' => $nama_organisasi,
                     'alamat_organisasi' => $alamat_organisasi,
@@ -45,7 +58,15 @@ class OrganisasiController extends BaseController
                     'status' => $status,
                 ]);
                   set_notif('success','berhasil','berhasil tambah organisasi');
+                   if(session()->get('role_baku') == 1){ 
+                  return redirect('superadmin/organisasi');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
                   return redirect('admins/organisasi');
+
+
+ }
       
 
 
@@ -60,7 +81,13 @@ class OrganisasiController extends BaseController
     public function hapus($id)
     {
         $Model = new ModelOrganisasi;
+        $organisasi = $Model->where('id',$id)->first();
+        $seting = new PengaturanWebsite();
+        $seting->where('organisasi_kode',$organisasi['organisasi_kode'])->delete();
+        $about = new PengaturanWebsite();
+        $about->where('organisasi_kode',$organisasi['organisasi_kode'])->delete();
         $organisasi = $Model->where('id',$id)->delete();
+
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus organisasi');
         return redirect('admins/organisasi');
@@ -126,9 +153,15 @@ class OrganisasiController extends BaseController
         }
     
         set_notif('success','berhasil','berhasil edit data organisasi');
-        return redirect('admins/organisasi');
+                      if(session()->get('role_baku') == 1){ 
+                  return redirect('superadmin/organisasi');
 
 
+ }elseif(session()->get('role_baku') == 2){ 
+                  return redirect('admins/organisasi');
+
+
+    }
     }
 
 }

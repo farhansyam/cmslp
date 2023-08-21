@@ -1,5 +1,8 @@
-<?php $this->extend('layout/SuperAdmin'); ?>
-
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}
+elseif(session()->get('role_baku') == 2){  ?>
+  <?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
@@ -7,7 +10,18 @@
   <?= $validation->listErrors() ?>
         <?php endif; ?>
            <?php  if($role['read_data'] == "Y") { ?>
+            <?php if(session()->get('role_baku') == 1){ ?>
               <form action="<?= site_url('superadmin/pengaturan/simpan')?>" method="post">
+
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+              <form action="<?= site_url('admins/pengaturan/simpan')?>" method="post">
+
+
+<?php }else{ ?>
+
+<?php } ?>
+
               <input type="hidden" name="id" value="<?php echo $data['id_pengaturan_website'] ?>">
               <div class="row">
                 <!-- Floating (Outline) -->

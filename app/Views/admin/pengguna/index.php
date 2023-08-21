@@ -1,5 +1,9 @@
-<?php $this->extend('layout/admin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"> Administrator</h4>
@@ -9,7 +13,18 @@
                 <div class="table-responsive text-wrap">
                 <div class="card-body">
                       <div class="demo-inline-spacing">
+                        <?php if(session()->get('role_baku') == 1){ ?>
+
+                        <a href="<?= site_url('superadmin/pengguna/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
                         <a href="<?= site_url('admins/pengguna/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+
+
+<?php }else{ ?>
+
+<?php } ?>
+
                       </div>
                     </div>
 

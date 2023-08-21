@@ -22,7 +22,7 @@
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
 
-  <a href="<?= site_url('admin/kerjasama-client/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+  <a href="<?= site_url('admins/kerjasama-client/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
 
 <?php }else{ ?>
 
@@ -36,6 +36,10 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
+                             <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <th>Owner</th>
+                        <th>Organisasi</th>
+                        <?php }  ?>
                         <th>Client</th>
                         <th>Logo</th>
                         <th>Status</th>
@@ -48,6 +52,10 @@
                     foreach($kerjasama as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
+                         <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <th><?= $d->id_pengguna['username']?></th>
+                        <th><?= $d->organisasi_kode['nama_organisasi'] ?></th>
+                        <?php } ?>
                         <td><?= $d->nama_client?></td>
                         <td><img width="50" height="50" src="<?php echo base_url('uploads/client/'.$d->logo_client)?>" alt="" srcset=""></td>
                         <td><?php if($d->status == 1) {?>
@@ -72,9 +80,9 @@
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
                   <?php if($role['update_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('admin/kerjasama-client/edit/')?><?=$d->id_kerjasama_client?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/kerjasama-client/edit/')?><?=$d->id_kerjasama_client?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
                              <?php } if($role['delete_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('admin/kerjasama-client/hapus/')?><?=$d->id_kerjasama_client?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <a class="dropdown-item waves-effect" href="<?= site_url('admins/kerjasama-client/hapus/')?><?=$d->id_kerjasama_client?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
                              <?php } ?>
           
 

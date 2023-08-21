@@ -14,7 +14,7 @@
               <form  method="post" action="<?= site_url('superadmin/layanan/simpan')?>" enctype="multipart/form-data">
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
-              <form action="<?= site_url('admin/layanan/simpan')?>" method="post" enctype="multipart/form-data">
+              <form action="<?= site_url('admins/layanan/simpan')?>" method="post" enctype="multipart/form-data">
 
 <?php  }else{?>
               <form action="<?= site_url('user/layanan/simpan')?>" method="post" enctype="multipart/form-data">
@@ -32,8 +32,8 @@
                               <select name="organisasi_kode" id="select2Basic" class="select2 form-select form-select-lg select2-hidden-accessible" data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
                               <?php foreach($data1 as $d2) { ?>
                                 <option value="<?= $d2['organisasi_kode']?>" data-select2-id="95"><?= $d2['nama_organisasi'] ?></option>
+                              </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="1" style="width: 664px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-select2Basic-container"><span class="select2-selection__rendered" id="select2-select2Basic-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div>
                               <?php } ?>
-                            </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="1" style="width: 664px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-select2Basic-container"><span class="select2-selection__rendered" id="select2-select2Basic-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div>
                       </div>
                       <?php } elseif(session()->get('role_baku') ==2 ) { ?>
                         <div class="form-floating form-floating-outline" data-select2-id="45">
@@ -43,7 +43,6 @@
                                 <option value="<?= $d2['organisasi_kode']?>" data-select2-id="95"><?= $d2['nama_organisasi'] ?></option>
                               <?php } ?>
                             </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="1" style="width: 664px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-select2Basic-container"><span class="select2-selection__rendered" id="select2-select2Basic-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div>
-                          </div>
                           </div>
                           <?php } ?>
                       <div class="form-floating form-floating-outline">
@@ -105,7 +104,7 @@
              url: "<?php if(session()->get('role_baku') == 1 ){
                 echo base_url('superadmin/layanan/simpan'); 
             }elseif(session()->get('role_baku') == 2){
-                echo base_url('admin/layanan/simpan'); 
+                echo base_url('admins/layanan/simpan'); 
             }else{
                 echo base_url('user/layanan/simpan'); 
             

@@ -20,7 +20,7 @@
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
 
-                        <a href="<?= site_url('admin/testimoni/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                        <a href="<?= site_url('admins/testimoni/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
 
 <?php }else{ ?>
                         <a href="<?= site_url('user/testimoni/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
@@ -35,8 +35,18 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                        <th>Organisasi</th>
+                        <?php if(session()->get('role_baku') == 1){ ?>
+    <th>Organisasi</th>
                         <th>Owner</th>
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+    <th>Organisasi</th>
+                        <th>Owner</th>
+
+<?php }else{ ?>
+
+<?php } ?>
+                    
                         <th>Nama</th>
                         <th>Instansi</th>
                         <th>Testimoni</th>
@@ -52,8 +62,18 @@
                     foreach($testimoni as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
-                        <td><?= $d->organisasi_kode['nama_organisasi']?></td>
+                        <?php if(session()->get('role_baku') == 1){ ?>
+
+ <td><?= $d->organisasi_kode['nama_organisasi']?></td>
                         <td><?= $d->id_pengguna['username']?></td>
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+
+ <td><?= $d->organisasi_kode['nama_organisasi']?></td>
+                        <td><?= $d->id_pengguna['username']?></td>
+<?php }else{ ?>
+
+<?php } ?>
+                       
                         <td><?= $d->nama?></td>
                         <td><?= $d->instansi?></td>
                         <td><?= $d->testimoni?></td>
@@ -80,8 +100,8 @@
 
                         <?php }elseif(session()->get('role_baku') == 2){ ?>
 <?php  if($role['delete_data'] == "Y") { ?>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/testimoni/edit/')?><?=$d->id_testimoni?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/testimoni/hapus/')?><?=$d->id_testimoni?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/testimoni/edit/')?><?=$d->id_testimoni?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/testimoni/hapus/')?><?=$d->id_testimoni?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
                               <?php }?>
                       <?php  }else { ?>
                               <?php  if($role['delete_data'] == "Y") { ?>

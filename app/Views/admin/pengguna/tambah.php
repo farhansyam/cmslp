@@ -1,5 +1,9 @@
-<?php $this->extend('layout/admin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Tambah Pengguna</h4>

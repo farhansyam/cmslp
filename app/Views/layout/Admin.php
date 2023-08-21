@@ -160,6 +160,94 @@
                 <div data-i18n="Data Pengguna">Data Pengguna</div>
               </a>
             </li>
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Core </span>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/pengaturan' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/pengaturan')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>
+                <div data-i18n="Pengaturan Website">Pengaturan Website</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/infokontak' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/infokontak')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-contacts-outline"></i>
+                <div data-i18n="Informasi Kontak">Informasi Kontak</div>
+              </a>
+            </li>
+            <li class="menu-item  <?= uri_string() == 'admins/tentang-kami' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/tentang-kami')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-information-outline"></i>
+                <div data-i18n="Tentang Kami">Tentang Kami</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/faq' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/faq')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-frequently-asked-questions"></i>
+                <div data-i18n="FAQ">FAQ</div>
+              </a>
+            </li>
+              <!-- Main -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Blog</span>
+            </li>
+ 
+            <!-- Blog -->
+            <li class="menu-item <?= uri_string() == 'admins/blog' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/blog')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-post"></i>
+                <div data-i18n="Artikel">Artikel</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/kategori' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/kategori')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-list-box"></i>
+                <div data-i18n="Kategori">Kategori</div>
+              </a>
+            </li>
+            <!-- Main -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Main</span>
+            </li>
+    
+            <!-- Banners -->
+              <li class="menu-item <?= uri_string() == 'admins/banners' ? 'active' : ''; ?>">
+                <a href="<?= site_url('admins/banners')?>" class="menu-link">
+                  <i class="menu-icon tf-icons mdi mdi-image-area"></i>
+                  <div data-i18n="Banners">Banners</div>
+                </a>
+              </li>
+            <!-- Icons -->
+            <li class="menu-item <?= uri_string() == 'admins/layanan' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/layanan')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-google-circles-extended"></i>
+                <div data-i18n="Layanan">Layanan</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/paket' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/paket')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-package"></i>
+                <div data-i18n="Packages">Packages</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/portofolio' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/portofolio')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-archive-outline"></i>
+                <div data-i18n="Portofolio">Portofolio</div>
+              </a>
+            </li>
+            <li class="menu-item  <?= uri_string() == 'admins/kerjasama-client' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/kerjasama-client')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-briefcase-outline"></i>
+                <div data-i18n="Client Work">Client Work</div>
+              </a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admins/testimoni' ? 'active' : ''; ?>">
+              <a href="<?= site_url('admins/testimoni')?>" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-star-outline"></i>
+                <div data-i18n="Testimoni">Testimoni</div>
+              </a>
+            </li>
             <li class="menu-item">
               <a href="<?php echo site_url('admins/logout')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-logout"></i>

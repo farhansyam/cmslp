@@ -39,7 +39,6 @@ class TentangKamiController extends BaseController
             $data['id_pengguna'] = $user;
             $data['organisasi_kode'] = $organisasi;
         }
-
         return view('superadmin/tentangkami/index',['data'=>$existingData,'role'=>$role]);
     }
     function SAedit($id) {
@@ -88,7 +87,15 @@ class TentangKamiController extends BaseController
         $Model = new TentangKami();
         $Model->save($data);
         set_notif('success','berhasil','berhasil ubah Tentang');
-        return redirect('superadmin/tentang-kami');
+            if(session()->get('role_baku') == 1){ 
+             return redirect('superadmin/tentang-kami');
+
+
+ }elseif(session()->get('role_baku') == 2){ 
+             return redirect('admins/tentang-kami');
+
+
+ }
 
 
     }

@@ -1,10 +1,24 @@
-<?php $this->extend('layout/superadmin'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
+              <h4 class="fw-bold py-1 mb-3">Edit Artikel</h4>
 
+             <?php if(session()->get('role_baku') == 1){ ?>
               <form action="<?= site_url('superadmin/blog/update')?>" enctype="multipart/form-data" method="post">
+
+
+<?php }elseif(session()->get('role_baku') == 2){ ?>
+              <form action="<?= site_url('admins/blog/update')?>" enctype="multipart/form-data" method="post">
+
+
+<?php }else{ ?>
+
+<?php } ?>
               <div class="row">
                 <input type="hidden" name="id" value="<?= $id_blog_artikel?>">
                 <!-- Floating (Outline) -->

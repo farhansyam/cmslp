@@ -99,7 +99,7 @@ class BannersController extends BaseController
                                  if(session()->get('role_baku') == 1){
                         return redirect('superadmin/banners');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/banners');
+                        return redirect('admins/banners');
 
                                 }else{
                         return redirect('user/banners');
@@ -123,7 +123,7 @@ class BannersController extends BaseController
           if(session()->get('role_baku') == 1){
                         return redirect('superadmin/banners');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/banners');
+                        return redirect('admins/banners');
 
                                 }else{
                         return redirect('user/banners');
@@ -200,7 +200,7 @@ class BannersController extends BaseController
                                 if(session()->get('role_baku') == 1){
                         return redirect('superadmin/banners');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/banners');
+                        return redirect('admins/banners');
 
                                 }else{
                         return redirect('user/banners');

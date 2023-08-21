@@ -21,7 +21,6 @@
                         <th>No</th>
                         <th>Foto Artikel</th>
                         <th>Judul Artikel</th>
-                        <th>Isi Artikel</th>
                         <th>Tag</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -35,7 +34,6 @@
                         <td><?= $no++?></td>
                         <td><img width="100" height="100" src="<?php echo base_url('uploads/blog/'.$d->foto_artikel)?>" alt="" srcset=""></td>
                         <td><?= $d->judul_artikel?></td>
-                        <td><?= $d->isi_artikel?></td>
                         <td><?= $d->tag_artikel?></td>
                         <td><?php if($d->status == 1) {?>
                         <span class="badge bg-label-success me-1">Active</span>

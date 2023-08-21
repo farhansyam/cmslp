@@ -54,7 +54,17 @@ class PenggunaController extends BaseController
         $Model = new ModelPengguna;
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah admin');
-        return redirect('admins/pengguna');
+        if(session()->get('role_baku') == 1){ 
+            
+            return redirect('superadmin/pengguna');
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+            return redirect('admins/pengguna');
+
+ }else{ 
+
+ } 
 
 
     }
@@ -75,7 +85,17 @@ class PenggunaController extends BaseController
         $admin = $Model->where('id_pengguna',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus pengguna');
-        return redirect('admins/pengguna');
+       if(session()->get('role_baku') == 1){ 
+            
+            return redirect('superadmin/pengguna');
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+            return redirect('admins/pengguna');
+
+ }else{ 
+
+ } 
     }
 
       public function edit($id)
@@ -122,7 +142,17 @@ class PenggunaController extends BaseController
         $Model = new ModelPengguna;
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit admin');
-        return redirect('admins/pengguna');
+        if(session()->get('role_baku') == 1){ 
+            
+            return redirect('superadmin/pengguna');
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+            return redirect('admins/pengguna');
+
+ }else{ 
+
+ } 
 
 
     }

@@ -12,7 +12,7 @@
 
 <?php }elseif(session()->get('role_baku') == 2){ ?>
 
-  <form action="<?= site_url('admin/portofolio/simpan')?>" method="post" enctype="multipart/form-data">
+  <form action="<?= site_url('admins/portofolio/simpan')?>" method="post" enctype="multipart/form-data">
 
 <?php }else{ ?>
 
@@ -154,7 +154,7 @@
             url: "<?php if(session()->get('role_baku') == 1 ){
                 echo base_url('superadmin/portofolio/simpan'); 
             }elseif(session()->get('role_baku') == 2){
-                echo base_url('admin/portofolio/simpan'); 
+                echo base_url('admins/portofolio/simpan'); 
             }else{
                 echo base_url('user/portofolio/simpan'); 
             

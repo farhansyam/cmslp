@@ -88,7 +88,7 @@ function simpan(){
                                     if(session()->get('role_baku') == 1){
                         return redirect('superadmin/layanan');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/layanan');
+                        return redirect('admins/layanan');
 
                                 }else{
                         return redirect('user/layanan');
@@ -123,7 +123,7 @@ function simpan(){
 
  }elseif(session()->get('role_baku') == 2){ 
 
-        return redirect('admin/layanan');
+        return redirect('admins/layanan');
 
  }else{ 
         return redirect('user/layanan');
@@ -210,7 +210,7 @@ function simpan(){
                               if(session()->get('role_baku') == 1){
                         return redirect('superadmin/layanan');
                                 }elseif(session()->get('role_baku') == 2){
-                        return redirect('admin/layanan');
+                        return redirect('admins/layanan');
 
                                 }else{
                         return redirect('user/layanan');
