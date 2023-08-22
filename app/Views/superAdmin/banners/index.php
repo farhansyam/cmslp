@@ -57,11 +57,14 @@
                     foreach($banners as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
-                           <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
-                          <td><a href="<?= site_url('superadmin/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                           <?php if(session()->get('role_baku') == 1 ){?>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
+
+                           <?php } elseif(session()->get('role_baku') == 2) {?>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
 
                         <?php } else { ?>
-                          <td><a href="<?= site_url('user/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
                           <?php } ?>
                         <td><?= $d->judul?></td>
                         <td><?= $d->deskripsi?></td>
@@ -94,8 +97,8 @@
 
                         <?php }elseif(session()->get('role_baku') == 2){ ?>
 <?php  if($role['delete_data'] == "Y") { ?>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/banners/edit/')?><?=$d->id_banner?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
-                                <a class="dropdown-item waves-effect" href="<?= site_url('admin/banners/hapus/')?><?=$d->id_banner?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/banners/edit/')?><?=$d->id_banner?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/banners/hapus/')?><?=$d->id_banner?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
                               <?php }?>
                       <?php  }else { ?>
                               <?php  if($role['delete_data'] == "Y") { ?>

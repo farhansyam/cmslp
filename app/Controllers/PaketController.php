@@ -16,7 +16,7 @@ class PaketController extends BaseController
         $Model = new Paket();
         $role =  $this->getRoleData();
         $Model = new Paket();
-        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+        if(session()->get('role_baku') == 1){
             $paket = $Model->get()->getResult();
             
         }else{
@@ -35,14 +35,15 @@ class PaketController extends BaseController
 
     function simpan()
     {
-         if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+         if(session()->get('role_baku') == 1){
               $modelOrganisasi = new ModelOrganisasi();
               $modelPengguna = new ModelPengguna();
               $organisasi = $modelOrganisasi->where('organisasi_kode',$_POST['organisasi_kode'])->first();
         $pengguna = $organisasi['id_pengguna_owner'];
         $organisasinya = $_POST['organisasi_kode'];
     }else{
-        $pengguna = session()->get('id_pengguna');
+        $pengguna = $this->getuser();
+        $pengguna = $pengguna['id_pengguna'];
         $organisasinya = session()->get('organisasi_kode');
     }
 

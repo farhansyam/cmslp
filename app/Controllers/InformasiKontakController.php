@@ -16,9 +16,15 @@ class InformasiKontakController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new PengaturanWebsite();
+        $ModelOrganisasi = new ModelOrganisasi();
+        $org = $ModelOrganisasi->where('organisasi_kode',session()->get('organisasi_kode'))->first();
+        $role = $this->getRoleData();
+        if(session()->get('role_baku') == 3){
         $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
-        $existingData = $Model->where($dataToInsert)->first();
-        
+        }else{
+        $dataToInsert = ['id_pengguna' => $org['id_pengguna_owner'],'organisasi_kode' => session()->get('organisasi_kode')];
+        }
+    $existingData = $Model->where($dataToInsert)->first();
         if($existingData){
             return view('users/infokontak/index',['existingData' => $existingData ,'role'=>$role]);
         }
@@ -65,7 +71,11 @@ class InformasiKontakController extends BaseController
         $Model = new PengaturanWebsite();
         $Model->save($data);
         set_notif('success','berhasil','berhasil ubah informasi kontak');
-        return redirect('user/infokontak');
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/infokontak');
+            }else{
+                return redirect('user/infokontak');
+            }
 
 
     }

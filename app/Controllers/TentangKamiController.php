@@ -15,7 +15,13 @@ class TentangKamiController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new TentangKami();
-        $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
+          $ModelOrganisasi = new ModelOrganisasi();
+        $org = $ModelOrganisasi->where('organisasi_kode',session()->get('organisasi_kode'))->first();
+        $role = $this->getRoleData();
+        if(session()->get('role_baku') == 3){
+        }else{
+            $dataToInsert = ['id_pengguna' => $org['id_pengguna_owner'],'organisasi_kode' => session()->get('organisasi_kode')];
+        }
         $existingData = $Model->where($dataToInsert)->first();
         if($existingData){
             return view('users/tentangkami/index',['existingData'=>$existingData,'role'=>$role]);
@@ -66,7 +72,12 @@ class TentangKamiController extends BaseController
         $Model = new TentangKami();
         $Model->save($data);
         set_notif('success','berhasil','berhasil ubah Tentang');
+         if(session()->get('role_baku') == 2){
+        return redirect('admins/tentang-kami');
+
+            }else{
         return redirect('user/tentang-kami');
+            }
 
 
     }

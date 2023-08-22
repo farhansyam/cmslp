@@ -15,9 +15,17 @@ class PengaturanWebsiteController extends BaseController
     {
         
         $Model = new PengaturanWebsite();
+        $ModelOrganisasi = new ModelOrganisasi();
+        $org = $ModelOrganisasi->where('organisasi_kode',session()->get('organisasi_kode'))->first();
         $role = $this->getRoleData();
-        $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
-        $existingData = $Model->where($dataToInsert)->first();
+        if(session()->get('role_baku') == 3){
+            $dataToInsert = ['id_pengguna' => session()->get('id_pengguna'),'organisasi_kode' => session()->get('organisasi_kode')];
+            $existingData = $Model->where($dataToInsert)->first();
+
+        }else{
+            $dataToInsert = ['id_pengguna' => $org['id_pengguna_owner'],'organisasi_kode' => session()->get('organisasi_kode')];
+            $existingData = $Model->where($dataToInsert)->first();
+        }
         
         if($existingData){
             return view('users/pengaturanweb/index',['data' => $existingData,'role' => $role]);
@@ -116,7 +124,11 @@ class PengaturanWebsiteController extends BaseController
         } else {
             $Model->save($data);
             set_notif('success','berhasil','berhasil ubah pengaturan web');
-            return redirect('user/pengaturan');
+            if(session()->get('role_baku') == 2){
+                return redirect('admins/pengaturan');
+            }else{
+                return redirect('user/pengaturan');
+            }
         }
       
 

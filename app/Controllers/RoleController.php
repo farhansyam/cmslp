@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ModelRole;
+use App\Models\ModelOrganisasi;
 
 class RoleController extends BaseController
 {
@@ -18,18 +19,34 @@ class RoleController extends BaseController
     }
 
     function simpan(){
-        $data = [
-            'nama_role'  => $_POST['nama_role'],
-            'create_data'  => $_POST['create_data'],
-            'read_data'  => $_POST['read_data'],
-            'update_data'  => $_POST['update_data'],
-            'delete_data'  => $_POST['delete_data'],
-            'all_organisasi'  => $_POST['all_organisasi'],
-            'list_organisasi'  => $_POST['list_organisasi'],
-            'waktu_simpan_data'=> date('y-m-d'),
-            'status'=>$_POST['status']
+        if($_POST['paket']){
+            $org = json_encode($_POST['paket']);
+            $data = [
+                'nama_role'  => $_POST['nama_role'],
+                'create_data'  => $_POST['create_data'],
+                'read_data'  => $_POST['read_data'],
+                'update_data'  => $_POST['update_data'],
+                'delete_data'  => $_POST['delete_data'],
+                'all_organisasi'  => $_POST['all_organisasi'],
+                'list_organisasi'  => $org,
+                'waktu_simpan_data'=> date('y-m-d'),
+                'status'=>$_POST['status']
+    
+                    ];
+        }else{
+              $data = [
+                'nama_role'  => $_POST['nama_role'],
+                'create_data'  => $_POST['create_data'],
+                'read_data'  => $_POST['read_data'],
+                'update_data'  => $_POST['update_data'],
+                'delete_data'  => $_POST['delete_data'],
+                'all_organisasi'  => $_POST['all_organisasi'],
+                'waktu_simpan_data'=> date('y-m-d'),
+                'status'=>$_POST['status']
+    
+                    ];
+        }
 
-                ];
         $Model = new ModelRole();
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah role');
@@ -39,7 +56,9 @@ class RoleController extends BaseController
     }
 
     function tambah() {
-        return view('superadmin/role/tambah');
+        $organiasiModel = new ModelOrganisasi();
+        $organisasi = $organiasiModel->findAll();
+        return view('superadmin/role/tambah',['organisasi' => $organisasi]);
     }
 
     public function hapus($id)
@@ -54,11 +73,16 @@ class RoleController extends BaseController
       public function edit($id)
     {
         $Model = new ModelRole();
+        
+        $organiasiModel = new ModelOrganisasi();
+        $organisasi = $organiasiModel->findAll();
         $role = $Model->where('id_role',$id)->first();
-        return view('superadmin/role/edit',$role);
+        return view('superadmin/role/edit',['role' => $role,'organisasi' => $organisasi]);
     }
 
     function update(){
+         if($_POST['paket']){
+            $org = json_encode($_POST['paket']);
         $data = [
             'id_role'  => $_POST['id'],
             'nama_role'  => $_POST['nama_role'],
@@ -67,11 +91,26 @@ class RoleController extends BaseController
             'update_data'  => $_POST['update_data'],
             'delete_data'  => $_POST['delete_data'],
             'all_organisasi'  => $_POST['all_organisasi'],
-            'list_organisasi'  => $_POST['list_organisasi'],
+            'list_organisasi'  => $org,
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 
                 ];
+            }else{
+                 $data = [
+                    'id_role'  => $_POST['id'],
+                    'nama_role'  => $_POST['nama_role'],
+                    'create_data'  => $_POST['create_data'],
+                    'read_data'  => $_POST['read_data'],
+                    'update_data'  => $_POST['update_data'],
+                    'delete_data'  => $_POST['delete_data'],
+                    'all_organisasi'  => $_POST['all_organisasi'],
+                    'list_organisasi'  => $org,
+                    'waktu_simpan_data'=> date('y-m-d'),
+                    'status'=>$_POST['status']
+
+                ];
+            }
         $Model = new ModelRole();
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit role');

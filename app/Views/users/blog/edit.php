@@ -4,7 +4,11 @@
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
 
-              <form action="<?= site_url('user/blog/update')?>" enctype="multipart/form-data" method="post">
+              <?php if(session()->get('role_baku') == 2){ ?>
+                <form action="<?= site_url('admins/blog/update')?>" enctype="multipart/form-data" method="post">
+                <?php }else{ ?>
+                  <form action="<?= site_url('user/blog/update')?>" enctype="multipart/form-data" method="post">
+              <?php } ?>
               <div class="row">
                 <input type="hidden" name="id" value="<?= $blog{'id_blog_artikel'}?>">
                 <!-- Floating (Outline) -->

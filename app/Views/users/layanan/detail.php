@@ -40,7 +40,6 @@
                       <tr>
                         <th>No</th>
                         <th>Gambar</th>
-                        <th>Opsi</th>
                       </tr>
                     </thead>
                       <tbody class="table-border-bottom-0">
@@ -50,19 +49,6 @@
                            <tr>
                         <td><?= $no++?></td>
                         <td><img width="180" height="100" src="<?php echo base_url('uploads/layanan/'.$d->gambar)?>" alt="" srcset=""></td>
-                        <td>
-                          <div class="dropdown">
-                                                                <?php if(session()->get('role_baku') == 1) {?>
-                              <a class="waves-effect" href="<?= site_url('superadmin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-<?php }elseif(session()->get('role_baku') == 2){ ?>
-                              <a class="waves-effect" href="<?= site_url('admins/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-
-<?php  }else{?>
-                              <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-  
-<?php  }?>
-                          </div>
-                        </td>
                       </tr>
                     <?php } ?>
                     </tbody>

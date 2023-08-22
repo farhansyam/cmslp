@@ -125,9 +125,20 @@ class Login extends BaseController
 
                 else
                 {
+                         $model = new \App\Models\ModelRole();
+                          $modelOrganisasi = new \App\Models\ModelOrganisasi();
+
+                          // Panggil metode di model untuk mendapatkan data
+                          $data = $model->where('id_role',$dataPengguna['role'])->first();
+
+                         foreach(json_decode($data['list_organisasi']) as $d){ 
+                              $org = $modelOrganisasi->where('organisasi_kode',$d)->first();
+                              $a = $org['nama_organisasi'];
+                         }
                     $dataSesi = [
                     'id_admin' => $dataPengguna['id_admin'],
                     'username' => $dataPengguna['username'],
+                    'organisasi_kode' => $a[0],
                     'role' => $dataPengguna['role'],
                     'role_baku' => $dataPengguna['role_baku'],
                     'create' => $role['create_data'],

@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 Use App\Models\ModelRole;
+Use App\Models\ModelPengguna;
 /**
  * Class BaseController
  *
@@ -60,6 +61,10 @@ abstract class BaseController extends Controller
     {
         $roleModel = new ModelRole();
         return $roleModel->where('id_role',session()->get('role'))->first();
-
+    }
+     protected function getuser()
+    {
+        $Pengguna = new ModelPengguna();
+        return $Pengguna->where('organisasi_kode',session()->get('organisasi_kode'))->first();
     }
 }

@@ -1,6 +1,7 @@
 <?php $this->extend('layout/superadmin'); ?>
 
 <?= $this->section('content') ?>
+
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
 
@@ -56,25 +57,23 @@
                             <span class="switch-label">Delete Data (Y/N)</span>
                           </label>
                         <div class="form-floating form-floating-outline">
-                          <input
-                            type="text"
-                            class="form-control"
-                            name = "all_organisasi"
-                            id="basic-all_organisasi"
-                            placeholder="landingpage"
-                            aria-label="all_organisasi"
-                            aria-describedby="basic-all_organisasi" />
+                          <select name="all_organisasi" id="" class="form-control">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
                           <label for="basic-all_organisasi">All Organisasi</label>
                       </div>
                         <div class="form-floating form-floating-outline">
-                          <input
-                            type="text"
-                            class="form-control"
-                            name = "list_organisasi"
-                            id="basic-list_organisasi"
-                            placeholder="landingpage"
-                            aria-label="list_organisasi"
-                            aria-describedby="basic-list_organisasi" />
+                    <select id="organisasi" name="paket[]" class="form-control js-example-basic-multiple" multiple="multiple">
+
+                    <option value=""></option>
+                          
+                      <?php foreach($organisasi as $org) { ?>
+                        <option value="<?=$org['organisasi_kode']?>"><?= $org['nama_organisasi']?></option>
+                      <?php } ?>
+
+
+                </select>
                           <label for="basic-list_organisasi">List Organisasi</label>
                       </div>
                             <label class="switch switch-danger">
@@ -96,4 +95,13 @@
                 </div>
                
             </div>
+
+
+
+        <script>
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
+        </script>
 <?= $this->endSection() ?>

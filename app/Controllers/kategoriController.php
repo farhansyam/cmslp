@@ -20,6 +20,7 @@ class kategoriController extends BaseController
     function simpan(){
         $data = [
             'kategori' => $_POST['kategori'],
+            'bagian' => $_POST['bagian'],
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 
@@ -27,7 +28,11 @@ class kategoriController extends BaseController
         $Model = new Kategori();
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah kategori');
-        return redirect('user/kategori');
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/kategori');
+            }else{
+                return redirect('user/kategori');
+            }
 
 
     }
@@ -42,7 +47,11 @@ class kategoriController extends BaseController
         $kategori = $Model->where('id_kategori',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus kategori');
-        return redirect('user/kategori');
+        if(session()->get('role_baku') == 2){
+                return redirect('admins/kategori');
+            }else{
+                return redirect('user/kategori');
+            }
     }
 
       public function edit($id)
@@ -56,6 +65,7 @@ class kategoriController extends BaseController
         $data = [
             'id_kategori'  => $_POST['id'],
             'kategori'  => $_POST['kategori'],
+            'bagian'  => $_POST['bagian'],
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 
@@ -63,7 +73,11 @@ class kategoriController extends BaseController
         $Model = new Kategori();
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit kategori');
-        return redirect('user/kategori');
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/kategori');
+            }else{
+                return redirect('user/kategori');
+            }
 
 
     }
@@ -78,6 +92,7 @@ class kategoriController extends BaseController
     function SAsimpan(){
         $data = [
             'kategori' => $_POST['kategori'],
+            'bagian' => $_POST['bagian'],
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 
@@ -130,6 +145,7 @@ class kategoriController extends BaseController
         $data = [
             'id_kategori'  => $_POST['id'],
             'kategori'  => $_POST['kategori'],
+            'bagian'  => $_POST['bagian'],
             'waktu_simpan_data'=> date('y-m-d'),
             'status'=>$_POST['status']
 

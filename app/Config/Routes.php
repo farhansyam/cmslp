@@ -266,16 +266,8 @@ $routes->group('superadmin',['filter' => 'Superadmin'], static function ($routes
 $routes->group('admins',['filter' => 'Admin'], static function ($routes) {
     $routes->get('/', 'Dashboard::index3');
     $routes->get('logout', 'Dashboard::logoutA');
+    $routes->get('set/(:num)', 'Dashboard::setorganisasi/$1');
 
-    $routes->get('banners', 'bannersController::index');
-    $routes->get('banners/tambah', 'bannersController::tambah');
-    $routes->post('banners/simpan', 'bannersController::simpan');
-    $routes->post('banners/update/(:num)', 'bannersController::update/$1');
-    $routes->get('banners/hapus/(:num)', 'bannersController::hapus/$1');
-    $routes->get('gambar/hapus/(:num)', 'bannersController::hapusgambar/$1');
-    $routes->get('banners/detail/(:num)', 'bannersController::detail/$1');
-    $routes->get('banners/edit/(:num)', 'bannersController::edit/$1');
-   
      // Organisasi
     $routes->get('organisasi', 'OrganisasiController::index');
     $routes->get('organisasi/tambah', 'OrganisasiController::tambah');
@@ -291,50 +283,36 @@ $routes->group('admins',['filter' => 'Admin'], static function ($routes) {
     $routes->post('pengguna/update', 'PenggunaController::update');
     $routes->get('pengguna/hapus/(:num)', 'PenggunaController::hapus/$1');
     $routes->get('pengguna/edit/(:num)', 'PenggunaController::edit/$1');
-
-
-    // banner
-    $routes->post('banners/simpan', 'bannersController::simpan');
-    $routes->get('banners', 'bannersController::index');
-    $routes->get('banners/tambah', 'bannersController::tambah');
-    $routes->post('banners/update/(:num)', 'bannersController::update/$1');
-    $routes->get('banners/hapus/(:num)', 'bannersController::hapus/$1');
-    $routes->get('gambar/hapus/(:num)', 'bannersController::hapusgambar/$1');
-    $routes->get('banners/detail/(:num)', 'bannersController::detail/$1');
-    $routes->get('banners/edit/(:num)', 'bannersController::edit/$1');
-   
-    // Seting webs
-    $routes->get('pengaturan/edit/(:num)', 'PengaturanWebsiteController::SAedit/$1');
-    $routes->get('pengaturan', 'PengaturanWebsiteController::SAindex');
-    $routes->post('pengaturan/simpan', 'PengaturanWebsiteController::SAsave');
+    // pengaturan website
+    $routes->get('pengaturan', 'PengaturanWebsiteController::index');
+    $routes->post('pengaturan/simpan', 'PengaturanWebsiteController::save');
     // info kontak
+    $routes->get('infokontak', 'InformasiKontakController::index');
+    $routes->post('infokontak/simpan', 'InformasiKontakController::save');
 
     // informasi kontak
-    $routes->get('infokontak/edit/(:num)', 'informasiKontakController::SAedit/$1');
-    $routes->get('infokontak', 'informasiKontakController::SAindex');
-    $routes->post('infokontak/simpan', 'informasiKontakController::SAsave');
+    $routes->get('informasi-kontak', 'infoKontakController::index');
+    $routes->post('informasi-kontak/simpan', 'infoKontakController::save');
    
     // tentang kami
-    $routes->get('tentang-kami', 'TentangKamiController::SAindex');
-    $routes->post('tentang-kami/simpan', 'TentangKamiController::SAsave');
-    $routes->get('tentang-kami/edit/(:num)', 'TentangKamiController::SAedit/$1');
-
+    $routes->get('tentang-kami', 'TentangKamiController::index');
+    $routes->post('tentang-kami/simpan', 'TentangKamiController::save');
 
     // Faq
-    $routes->get('faq', 'faqController::SAindex');
-    $routes->get('faq/tambah', 'faqController::SAtambah');
-    $routes->post('faq/simpan', 'faqController::SAsimpan');
-    $routes->post('faq/update', 'faqController::SAupdate');
-    $routes->get('faq/hapus/(:num)', 'faqController::SAhapus/$1');
-    $routes->get('faq/edit/(:num)', 'faqController::SAedit/$1');
+    $routes->get('faq', 'faqController::index');
+    $routes->get('faq/tambah', 'faqController::tambah');
+    $routes->post('faq/simpan', 'faqController::simpan');
+    $routes->post('faq/update', 'faqController::update');
+    $routes->get('faq/hapus/(:num)', 'faqController::hapus/$1');
+    $routes->get('faq/edit/(:num)', 'faqController::edit/$1');
 
     // Kategori
-    $routes->get('kategori', 'kategoriController::SAindex');
-    $routes->get('kategori/tambah', 'kategoriController::SAtambah');
-    $routes->post('kategori/simpan', 'kategoriController::SAsimpan');
-    $routes->post('kategori/update', 'kategoriController::SAupdate');
-    $routes->get('kategori/hapus/(:num)', 'kategoriController::SAhapus/$1');
-    $routes->get('kategori/edit/(:num)', 'kategoriController::SAedit/$1');
+    $routes->get('kategori', 'kategoriController::index');
+    $routes->get('kategori/tambah', 'kategoriController::tambah');
+    $routes->post('kategori/simpan', 'kategoriController::simpan');
+    $routes->post('kategori/update', 'kategoriController::update');
+    $routes->get('kategori/hapus/(:num)', 'kategoriController::hapus/$1');
+    $routes->get('kategori/edit/(:num)', 'kategoriController::edit/$1');
 
     // Paket
     $routes->get('paket', 'paketController::index');
@@ -353,12 +331,12 @@ $routes->group('admins',['filter' => 'Admin'], static function ($routes) {
     $routes->get('kerjasama-client/edit/(:num)', 'KerjasamaController::edit/$1');
 
     // Blog
-    $routes->get('blog', 'BlogController::SAindex');
-    $routes->get('blog/tambah', 'BlogController::SAtambah');
-    $routes->post('blog/simpan', 'BlogController::SAsimpan');
-    $routes->post('blog/update', 'BlogController::SAupdate');
-    $routes->get('blog/hapus/(:num)', 'BlogController::SAhapus/$1');
-    $routes->get('blog/edit/(:num)', 'BlogController::SAedit/$1');
+    $routes->get('blog', 'BlogController::index');
+    $routes->get('blog/tambah', 'BlogController::tambah');
+    $routes->post('blog/simpan', 'BlogController::simpan');
+    $routes->post('blog/update', 'BlogController::update');
+    $routes->get('blog/hapus/(:num)', 'BlogController::hapus/$1');
+    $routes->get('blog/edit/(:num)', 'BlogController::edit/$1');
 
     // Testimoni
     $routes->get('testimoni', 'TestimoniController::index');
@@ -368,6 +346,17 @@ $routes->group('admins',['filter' => 'Admin'], static function ($routes) {
     $routes->get('testimoni/hapus/(:num)', 'TestimoniController::hapus/$1');
     $routes->get('testimoni/edit/(:num)', 'TestimoniController::edit/$1');
 
+    // Banner
+    $routes->get('banners', 'bannersController::index');
+    $routes->get('banners/tambah', 'bannersController::tambah');
+    $routes->post('banners/simpan', 'bannersController::simpan');
+    $routes->post('banners/update/(:num)', 'bannersController::update/$1');
+    $routes->get('banners/hapus/(:num)', 'bannersController::hapus/$1');
+    $routes->get('gambar/hapus/(:num)', 'bannersController::hapusgambar/$1');
+    $routes->get('banners/detail/(:num)', 'bannersController::detail/$1');
+    $routes->get('banners/edit/(:num)', 'bannersController::edit/$1');
+   
+   
     // Layanan   
     $routes->get('layanan', 'layananController::index');
     $routes->get('layanan/tambah', 'layananController::tambah');
@@ -386,6 +375,7 @@ $routes->group('admins',['filter' => 'Admin'], static function ($routes) {
     $routes->get('gambar/hapus/(:num)', 'portofolioController::hapusgambar/$1');
     $routes->get('portofolio/detail/(:num)', 'portofolioController::detail/$1');
     $routes->get('portofolio/edit/(:num)', 'portofolioController::edit/$1');
+
 
 });
 

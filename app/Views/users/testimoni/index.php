@@ -39,10 +39,6 @@
     <th>Organisasi</th>
                         <th>Owner</th>
 
-<?php }elseif(session()->get('role_baku') == 2){ ?>
-    <th>Organisasi</th>
-                        <th>Owner</th>
-
 <?php }else{ ?>
 
 <?php } ?>
@@ -63,10 +59,6 @@
                            <tr>
                         <td><?= $no++?></td>
                         <?php if(session()->get('role_baku') == 1){ ?>
-
- <td><?= $d->organisasi_kode['nama_organisasi']?></td>
-                        <td><?= $d->id_pengguna['username']?></td>
-<?php }elseif(session()->get('role_baku') == 2){ ?>
 
  <td><?= $d->organisasi_kode['nama_organisasi']?></td>
                         <td><?= $d->id_pengguna['username']?></td>

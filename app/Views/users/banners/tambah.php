@@ -62,6 +62,14 @@
                           <label for="basic-deskripsi">Deskripsi</label>
                       </div>
                       <div class="form-floating form-floating-outline">
+                          <select name="kategori" id="" class="form-control">
+                              <?php foreach($kategori as $k) { ?>
+                                <option value="<?=$k->kategori?>"><?=$k->kategori?></option>
+                                <?php } ?>
+                         </select>
+                          <label for="basic-link">Kategori</label>
+                      </div>
+                      <div class="form-floating form-floating-outline">
                           <input
                             name="link"
                             type="text"
@@ -75,15 +83,15 @@
                       </div>
                       <div class="form-floating form-floating-outline">
                           <input
-                            name="kategori"
-                            type="text"
+                            name="gambar"
+                            type="file"
                             class="form-control"
-                            id="basic-kategori"
-                            value="<?= session()->getFlashdata('kategori')?>"
+                            id="basic-Gambar"
+                            value="<?= session()->getFlashdata('gambar')?>"
                             placeholder="landingpage"
-                            aria-label="kategori"
-                            aria-describedby="basic-kategori" />
-                          <label for="basic-kategori">Kategori</label>
+                            aria-label="Gambar"
+                            aria-describedby="basic-Gambar" />
+                          <label for="basic-Gambar">Gambar</label>
                       </div>
                             <label class="switch switch-danger">
                             <input type="hidden" name="status"  value="0">
@@ -95,7 +103,6 @@
                             <span class="switch-label">Status (On/Off)</span>
                           </label>
                           <button type="submit" class="btn btn-primary" id="">Simpan Data</button>
-                          <div id="myDropzone" class="dropzone"></div>
                       </form>
                          
                     </div>
@@ -103,46 +110,5 @@
                 </div>
                
             </div>
- <script>
-        // Konfigurasi Dropzone
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone("#myDropzone", {
-            url: "<?php if(session()->get('role_baku') == 1 ){
-                echo base_url('superadmin/banners/simpan'); 
-            }elseif(session()->get('role_baku') == 2){
-                echo base_url('admins/banners/simpan'); 
-            }else{
-                echo base_url('user/banners/simpan'); 
-            
-            }
-            ?>",
-            autoProcessQueue: false,
-            parallelUploads: 1, // Jumlah file yang diunggah secara bersamaan (opsional)
-            maxFiles: 5, // Jumlah file maksimum yang diizinkan (opsional)
-            acceptedFiles: "image/*", // Jenis file yang diizinkan (opsional)
-            addRemoveLinks: true // Menampilkan tombol hapus pada setiap gambar (opsional)
-        });
-
-        // Event saat tombol submit diklik
-        document.querySelector("form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (myDropzone.getQueuedFiles().length > 0) {
-                myDropzone.processQueue(); // Proses unggahan jika ada file di antrian
-            } else {
-                this.submit(); // Klik submit form langsung jika tidak ada file di antrian
-            }
-        });
-
-        // Event saat unggahan berhasil
-        myDropzone.on("success", function (file, response) {
-            // Tangkap response dari server jika diperlukan
-        });
-
-        // Event saat unggahan gagal
-        myDropzone.on("error", function (file, errorMessage) {
-            // Tangkap pesan kesalahan dari server jika diperlukan
-        });
-    </script>
 
 <?= $this->endSection() ?>

@@ -32,6 +32,13 @@ class BlogController extends BaseController
 
     public function simpan()
     {
+         if(session()->get('role_baku') == 2){
+            $user = $this->getuser();
+            $user = $user['id_pengguna'];
+            
+              }else{
+                $user = session()->get('id_pengguna');
+              }
         $model = new BlogArtikelModel();
         if ($this->request->getMethod() === 'post' && $this->validate([
             'judul_artikel' => 'required|min_length[5]',
@@ -41,7 +48,7 @@ class BlogController extends BaseController
 
             
             $foto = $this->request->getFile('foto_artikel');
-                    $name = $foto->getName();
+                $name = $foto->getName();
                  $foto->move('uploads/blog', $name);
 
              $slug = $this->request->getPost('judul_artikel');
@@ -50,7 +57,7 @@ class BlogController extends BaseController
             $model->save([
                 'judul_artikel' => $this->request->getPost('judul_artikel'),
                 'isi_artikel' => $this->request->getPost('isi_artikel'),
-                'id_pengguna' => session()->get('id_pengguna'), // contoh mengambil id_pengguna dari sesi
+                'id_pengguna' => $user, // contoh mengambil id_pengguna dari sesi
                 'organisasi_kode' => session()->get('organisasi_kode'),
                 'jenis_artikel' => $this->request->getPost('jenis_artikel'),
                 'url_artikel' => $slug,
@@ -122,8 +129,6 @@ class BlogController extends BaseController
                 'id_blog_artikel' => $id,
                 'judul_artikel' => $this->request->getPost('judul_artikel'),
                 'isi_artikel' => $this->request->getPost('isi_artikel'),
-                'id_pengguna' => session()->get('id_pengguna'), // contoh mengambil id_pengguna dari sesi
-                'organisasi_kode' => session()->get('organisasi_kode'),
                 'jenis_artikel' => $this->request->getPost('jenis_artikel'),
                 'url_artikel' => $slug,
                 'id_kategori_artikel' => $this->request->getPost('id_kategori'),
@@ -136,9 +141,18 @@ class BlogController extends BaseController
             ]);
                 
             
-
+if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
         return redirect()->back();
-        }
+        }}
         else{
               $slug = $this->request->getPost('judul_artikel');
               $slug = str_replace(' ', '-', $slug);
@@ -161,7 +175,17 @@ class BlogController extends BaseController
         }
     
         set_notif('success','berhasil','berhasil edit data blog');
-        return redirect('user/blog');
+       if(session()->get('role_baku') == 1){ 
+     return redirect('superadmin/blog');
+            
+            
+        }elseif(session()->get('role_baku') == 2){ 
+            
+     return redirect('admins/blog');
+            
+        }else{ 
+     return redirect('user/blog');
+        }
 
         
     }

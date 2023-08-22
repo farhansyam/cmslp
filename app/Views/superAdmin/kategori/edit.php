@@ -22,6 +22,13 @@
                   <div class="card mb-4">
                     <!-- <h5 class="card-header">General</h5> -->
                     <div class="card-body demo-vertical-spacing demo-only-element">
+                           <div class="form-floating form-floating-outline">
+                        <select name="bagian" id="" class="form-control">
+                          <option <?= $bagian == 1 ? 'selected':''?> value="1">Blog</option>
+                          <option <?= $bagian == 2 ? 'selected':''?> value="2">Banner</option>
+                        </select>
+                          <label for="basic-kategori">Bagian</label>
+                      </div>
                       <div class="form-floating form-floating-outline">
                           <input
                             type="text"

@@ -9,8 +9,14 @@ elseif(session()->get('role_baku') == 2){  ?>
  <?php if (isset($validation)): ?>
   <?= $validation->listErrors() ?>
         <?php endif; ?>
-           <?php  if($role['read_data'] == "Y") { ?>
+           <?php  if($role['read_data'] == "Y") { 
+              if(session()->get('role_baku') == 2 ){
+            ?>
+              <form action="<?= site_url('admins/pengaturan/simpan')?>" method="post">
+              <?php }else{ ?>
               <form action="<?= site_url('user/pengaturan/simpan')?>" method="post">
+
+            <?php } ?>
               <input type="hidden" name="id" value="<?php echo $data['id_pengaturan_website'] ?>">
               <div class="row">
                 <!-- Floating (Outline) -->

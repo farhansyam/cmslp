@@ -29,16 +29,7 @@ class PortofolioController extends BaseController
             $data->organisasi_kode = $organisasi; }
 
 
-        }elseif(session()->get('role_baku') == 2){ 
-            $protofolio = $Model->get()->getResult();
-               $ModelUser = new ModelPengguna();
-        $ModelOrganisasi = new ModelOrganisasi();
-        foreach ($protofolio as &$data) {
-            $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
-            $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
-            $data->id_pengguna = $user;
-            $data->organisasi_kode = $organisasi; }
-            
+        
         }else{ 
             
             $protofolio = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
@@ -70,13 +61,14 @@ class PortofolioController extends BaseController
 			"gambar" => $name
 		));
     }
-        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+        if(session()->get('role_baku') == 1){
               $modelPengguna = new ModelPengguna;
         $pengguna = $modelPengguna->where('organisasi_kode',$_POST['organisasi_kode'])->first();
         $pengguna = $pengguna['id_pengguna'];
         $organisasinya = $_POST['organisasi_kode'];
     }else{
-        $pengguna = session()->get('id_pengguna');
+        $pengguna = $this->getuser();
+        $pengguna = $pengguna['id_pengguna'];
         $organisasinya = session()->get('organisasi_kode');
     }
        

@@ -1,16 +1,30 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
-
-              <form action="<?= site_url('user/kategori/simpan')?>" method="post">
+              <?php if(session()->get('role_baku') == 2){ ?>
+                <form action="<?= site_url('admins/kategori/simpan')?>" method="post">
+              <?php }else{ ?>
+                <form action="<?= site_url('user/kategori/simpan')?>" method="post">
+              <?php } ?>
               <div class="row">
                 <!-- Floating (Outline) -->
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <!-- <h5 class="card-header">General</h5> -->
                     <div class="card-body demo-vertical-spacing demo-only-element">
+                      <div class="form-floating form-floating-outline">
+                        <select name="bagian" id="" class="form-control">
+                          <option value="1">Blog</option>
+                          <option value="2">Banner</option>
+                        </select>
+                          <label for="basic-kategori">kategori</label>
+                      </div>
                       <div class="form-floating form-floating-outline">
                           <input
                             type="text"

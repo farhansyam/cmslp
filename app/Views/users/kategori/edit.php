@@ -1,10 +1,18 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
    <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-1 mb-3">Pengaturan Website</h4>
+              <h4 class="fw-bold py-1 mb-3">Edit Kategori</h4>
 
-              <form action="<?= site_url('user/kategori/update')?>" method="post">
+              <?php if(session()->get('role_baku') == 2){ ?>
+                <form action="<?= site_url('admins/kategori/update')?>" method="post">
+                <?php }else{ ?>
+                  <form action="<?= site_url('user/kategori/update')?>" method="post">
+              <?php } ?>
               <input type="hidden" name="id" value="<?= $id_kategori?>">
               <div class="row">
                 <!-- Floating (Outline) -->
@@ -12,6 +20,13 @@
                   <div class="card mb-4">
                     <!-- <h5 class="card-header">General</h5> -->
                     <div class="card-body demo-vertical-spacing demo-only-element">
+                          <div class="form-floating form-floating-outline">
+                        <select name="bagian" id="" class="form-control">
+                          <option <?= $bagian == 1 ? 'selected':''?> value="1">Blog</option>
+                          <option <?= $bagian == 2 ? 'selected':''?> value="2">Banner</option>
+                        </select>
+                          <label for="basic-kategori">Bagian</label>
+                      </div>
                       <div class="form-floating form-floating-outline">
                           <input
                             type="text"

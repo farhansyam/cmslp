@@ -20,8 +20,15 @@ class FaqController extends BaseController
     }
 
     function simpan(){
+        if(session()->get('role_baku') == 2){
+            $user = $this->getuser();
+            $user = $user['id_pengguna'];
+            
+              }else{
+                $user = session()->get('id_pengguna');
+              }
         $data = [
-            'id_pengguna' => session()->get('id_pengguna'),
+            'id_pengguna' => $user,
             'organisasi_kode' => session()->get('organisasi_kode'),
             'pertanyaan'  => $_POST['pertanyaan'],
             'jawaban' => $_POST['Jawaban'],
@@ -32,7 +39,11 @@ class FaqController extends BaseController
         $Model = new Faq();
         $Model->save($data);
         set_notif('success','berhasil','berhasil tambah Faq');
-        return redirect('user/faq');
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/faq');
+            }else{
+                return redirect('user/faq');
+            }
 
 
     }
@@ -47,7 +58,11 @@ class FaqController extends BaseController
         $faq = $Model->where('id_faq',$id)->delete();
         // Tampilkan pesan sukses atau lakukan redirect ke halaman lain
         set_notif('success','berhasil','berhasil hapus Faq');
-        return redirect('user/faq');
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/faq');
+            }else{
+                return redirect('user/faq');
+            }
     }
 
       public function edit($id)
@@ -69,8 +84,11 @@ class FaqController extends BaseController
         $Model = new Faq();
         $Model->save($data);
         set_notif('success','berhasil','berhasil edit Faq');
-        return redirect('user/faq');
-
+         if(session()->get('role_baku') == 2){
+                return redirect('admins/faq');
+            }else{
+                return redirect('user/faq');
+            }
 
     }
     function SAsimpan(){

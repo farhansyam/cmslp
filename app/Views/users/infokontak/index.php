@@ -8,7 +8,14 @@
    <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-1 mb-3">Informasi Kontak</h4>
 
-                <?php if($role['read_data'] == 'Y') { ?>
+                <?php if($role['read_data'] == 'Y') { 
+                     if(session()->get('role_baku') == 2 ){
+            ?>
+              <form action="<?= site_url('admins/infokontak/simpan')?>" method="post">
+              <?php }else{ ?>
+              <form action="<?= site_url('user/infokontak/simpan')?>" method="post">
+
+            <?php }?>
                   <form action="<?= site_url('user/infokontak/simpan')?>" method="post">
               <input type="hidden" name="id" value="<?php echo $existingData['id_pengaturan_website'] ?>">
               <div class="row">

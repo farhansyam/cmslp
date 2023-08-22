@@ -26,17 +26,6 @@ class TestimoniController extends BaseController
                 $data->organisasi_kode = $organisasi;
         }
 
- }elseif(session()->get('role_baku') == 2){ 
-
-     $testimoni = $Model->get()->getResult();
-     $ModelUser = new ModelPengguna();
-            $ModelOrganisasi = new ModelOrganisasi();
-            foreach ($testimoni as $data) {
-                $user = $ModelUser->find($data->id_pengguna); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
-                $organisasi = $ModelOrganisasi->where('organisasi_kode',$data->organisasi_kode)->first(); // Ganti 'role_id' dengan kolom yang menunjukkan ID role pada tabel data
-                $data->id_pengguna = $user;
-                $data->organisasi_kode = $organisasi;
-        }
  }else{ 
 
      $testimoni = $Model->where('organisasi_kode',session()->get('organisasi_kode'))->get()->getResult();
@@ -47,17 +36,17 @@ class TestimoniController extends BaseController
     function simpan(){
                 // Ambil data dari form
                 $user = new ModelOrganisasi();
-                $u = $user->where('organisasi_kode',$_POST['organisasi_kode'])->first();
-
-                 if(session()->get('role_baku') == 1){ 
+                
+                if(session()->get('role_baku') == 1){ 
                     
                     $idp = $u['id_pengguna_owner'];
                     $ok = $this->request->getPost('organisasi_kode');
 
  }elseif(session()->get('role_baku') == 2){ 
 
-                    $idp = $u['id_pengguna_owner'];
-                    $ok = $this->request->getPost('organisasi_kode');
+                    $idp = $this->getuser();
+                    $idp = $idp['id_pengguna'];
+                    $ok = session()->get('organisasi_kode');
 
 
  }else{ 

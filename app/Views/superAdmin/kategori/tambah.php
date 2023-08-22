@@ -21,6 +21,13 @@
                   <div class="card mb-4">
                     <!-- <h5 class="card-header">General</h5> -->
                     <div class="card-body demo-vertical-spacing demo-only-element">
+                          <div class="form-floating form-floating-outline">
+                        <select name="bagian" id="" class="form-control">
+                          <option value="1">Blog</option>
+                          <option value="2">Banner</option>
+                        </select>
+                          <label for="basic-kategori">kategori</label>
+                      </div>
                       <div class="form-floating form-floating-outline">
                           <input
                             type="text"

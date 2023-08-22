@@ -36,7 +36,7 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                             <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                             <?php if(session()->get('role_baku') == 1) {?>
                         <th>Owner</th>
                         <th>Organisasi</th>
                         <?php }  ?>
@@ -52,7 +52,7 @@
                     foreach($kerjasama as $d) { ?>
                            <tr>
                         <td><?= $no++?></td>
-                         <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                         <?php if(session()->get('role_baku') == 1) {?>
                         <th><?= $d->id_pengguna['username']?></th>
                         <th><?= $d->organisasi_kode['nama_organisasi'] ?></th>
                         <?php } ?>

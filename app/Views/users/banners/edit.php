@@ -64,14 +64,21 @@
                       </div>
                       <div class="form-floating form-floating-outline">
                           <input
-                            name="kategori"
-                            type="text"
+                            name="gambar"
+                            type="file"
                             class="form-control"
-                            id="basic-kategori"
-                            value="<?= $banners['kategori'] ?>"
+                            id="basic-Gambar"
                             placeholder="landingpage"
-                            aria-label="kategori"
-                            aria-describedby="basic-kategori" />
+                            aria-label="Gambar"
+                            aria-describedby="basic-Gambar" />
+                          <label for="basic-Gambar">Gambar Baru</label>
+                      </div>
+                      <div class="form-floating form-floating-outline">
+                          <select name="kategori" id="" class="form-control">
+                            <?php foreach($kategori as $kat) {?>
+                              <option value="<?= $kat->kategori ?>" <?= $kat->kategori==$banners['kategori'] ? 'selected':'' ?>><?= $kat->kategori ?></option>
+                          <?php } ?>
+                          </select>
                           <label for="basic-kategori">Kategori</label>
                       </div>
                             <label class="switch switch-danger">
@@ -85,37 +92,17 @@
                             <span class="switch-label">Status (On/Off)</span>
                           </label>
                           <button type="submit" class="btn btn-primary" id="">Simpan Data</button>
-                          <div id="myDropzone" class="dropzone"></div>
                           <table class="table">
                     <thead class="table-light">
                       <tr>
-                        <th>No</th>
-                        <th>Gambar</th>
-                        <th>Opsi</th>
+                        <th>Gambar Lama</th>
                       </tr>
                     </thead>
                       <tbody class="table-border-bottom-0">
-                    <?php 
-                    $no = 1;
-                    foreach($dataGambar as $d) { ?>
-                           <tr>
-                        <td><?= $no++?></td>
-                        <td><img width="180" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
-                        <td>
-                          <div class="dropdown">
-                                    <?php if(session()->get('role_baku') == 1) {?>
-                              <a class="waves-effect" href="<?= site_url('superadmin/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-<?php }elseif(session()->get('role_baku') == 2){ ?>
-                              <a class="waves-effect" href="<?= site_url('admins/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-
-<?php  }else{?>
-                              <a class="waves-effect" href="<?= site_url('user/gambar/hapus/')?><?=$d->id_gambar?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
-  
-<?php  }?>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$banners['gambar'])?>" alt="" srcset=""></td>
                           </div>
                         </td>
                       </tr>
-                    <?php } ?>
                     </tbody>
                   </table>
                       </form>
@@ -125,45 +112,5 @@
                 </div>
                
             </div>
- <script>
-        // Konfigurasi Dropzone
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone("#myDropzone", {
-           url: "<?php if(session()->get('role_baku') == 1 ){
-                echo base_url('superadmin/banners/update/'.$banners['id_banner']); 
-            }elseif(session()->get('role_baku') == 2){
-                echo base_url('admins/banners/update/'.$banners['id_banner']); 
-            }else{
-                echo base_url('user/banners/update/'.$banners['id_banner']); 
-            }
-            ?>",
-            autoProcessQueue: false,
-            parallelUploads: 1, // Jumlah file yang diunggah secara bersamaan (opsional)
-            maxFiles: 5, // Jumlah file maksimum yang diizinkan (opsional)
-            acceptedFiles: "image/*", // Jenis file yang diizinkan (opsional)
-            addRemoveLinks: true // Menampilkan tombol hapus pada setiap gambar (opsional)
-        });
-
-        // Event saat tombol submit diklik
-        document.querySelector("form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (myDropzone.getQueuedFiles().length > 0) {
-                myDropzone.processQueue(); // Proses unggahan jika ada file di antrian
-            } else {
-                this.submit(); // Klik submit form langsung jika tidak ada file di antrian
-            }
-        });
-
-        // Event saat unggahan berhasil
-        myDropzone.on("success", function (file, response) {
-            // Tangkap response dari server jika diperlukan
-        });
-
-        // Event saat unggahan gagal
-        myDropzone.on("error", function (file, errorMessage) {
-            // Tangkap pesan kesalahan dari server jika diperlukan
-        });
-    </script>
 
 <?= $this->endSection() ?>

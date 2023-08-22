@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\banners;
 use App\Models\ModelPengguna;
+use App\Models\Kategori;
 use App\Models\ModelOrganisasi;
 use App\Models\Gambar;
 
@@ -16,7 +17,7 @@ class BannersController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new banners();
-        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+        if(session()->get('role_baku') == 1){
             $ModelUser = new ModelPengguna();
         $ModelOrganisasi = new ModelOrganisasi();
         $banners = $Model->get()->getResult();
@@ -37,17 +38,19 @@ class BannersController extends BaseController
     function tambah() {
 
         $ModelOrganisasi = new ModelOrganisasi();
+        $ModelKategori = new Kategori();
+        $kategori = $ModelKategori->where('bagian',2)->where('status',1)->get()->getResult();
         $data1 = $ModelOrganisasi->findAll();
-        $randomCodeLength = 16;
-        $randomCode = bin2hex(random_bytes($randomCodeLength));
-        session()->set('random_code', $randomCode);
-        return view('users/banners/tambah',['data1'=>$data1]);
+        // $randomCodeLength = 16;
+        // $randomCode = bin2hex(random_bytes($randomCodeLength));
+        // session()->set('random_code', $randomCode);
+        return view('users/banners/tambah',['data1'=>$data1,'kategori'=>$kategori]);
     }
 
     function simpan(){
       
     $ban  = new banners();
-    $image = $this->request->getFile('file');
+    $image = $this->request->getFile('gambar');
     
     $TenDigitRandomNumber = session()->get('random_code');
     
@@ -57,18 +60,7 @@ class BannersController extends BaseController
         $name = $image->getName();
         $image->move('uploads/banners', $name);
 		$imageUpload = new Gambar();
-		$data = [
-			"random_code" =>$TenDigitRandomNumber,
-			"gambar" => $name,
-            "nama_sumber" => 'banner',
-		];
-        
-        $imageUpload->save($data);
-        return json_encode(array(
-            "status" => 1,
-			"gambar" => $name
-		));
-                } 
+        } 
 
              $ModelOrganisasi = new ModelOrganisasi();  
         if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
@@ -87,7 +79,7 @@ class BannersController extends BaseController
                             'deskripsi' => $_POST['deskripsi'],
                             'link' => $_POST['link'],
                             'kategori' => $_POST['kategori'],
-                            'random_code' => $TenDigitRandomNumber,
+                            'gambar' => $name,
                             'waktu_simpan_data'=> date('y-m-d'),
                             'status'=>$_POST['status']
 
@@ -148,39 +140,23 @@ class BannersController extends BaseController
       public function edit($id)
     {
         $Model = new banners();
-         $gambar = new Gambar();
+         $ModelKategori = new Kategori();
+        $kategori = $ModelKategori->where('bagian',2)->where('status',1)->get()->getResult();
          $banners = $Model->where('id_banner',$id)->first();
-         session()->set('random_code',$banners['random_code']);
-       $dataGambar = $gambar->where('random_code',$banners['random_code'])->get()->getResult();
+        
         return view('users/banners/edit',[
             'banners' => $banners,
-            'dataGambar' => $dataGambar
+            'kategori' => $kategori
         ]);
     }
 
     function update($id){
-        $TenDigitRandomNumber = session()->get('random_code');
-        $image = $this->request->getFile('file');
-        if($image)
+        $image = $this->request->getFile('gambar');
+        if($image->isValid())
         {
             $name = $image->getName();
             $image->move('uploads/banners', $name);
-
-		$imageUpload = new Gambar();
-		$data = [
-			"random_code" =>$TenDigitRandomNumber,
-			"gambar" => $name,
-            "nama_sumber" => 'banner',
-		];
         
-        $imageUpload->save($data);
-        return json_encode(array(
-            "status" => 1,
-			"gambar" => $name
-		));
-    }
-        $ban  = new banners();
-        $data2 = $ban->where('id_banner',$_POST['id_banner'])->first();
         
      $data = [
                             'id_banner' => $_POST['id_banner'],
@@ -188,7 +164,7 @@ class BannersController extends BaseController
                             'deskripsi' => $_POST['deskripsi'],
                             'link' => $_POST['link'],
                             'kategori' => $_POST['kategori'],
-                            'random_code' => $TenDigitRandomNumber,
+                            'gambar' => $name,
                             'waktu_simpan_data'=> date('y-m-d'),
                             'status'=>$_POST['status']
 
@@ -206,7 +182,33 @@ class BannersController extends BaseController
                         return redirect('user/banners');
 
                                 }
-                }
+    }else{
+        
+     $data = [
+                            'id_banner' => $_POST['id_banner'],
+                            'judul'  => $_POST['judul'],
+                            'deskripsi' => $_POST['deskripsi'],
+                            'link' => $_POST['link'],
+                            'kategori' => $_POST['kategori'],
+                            'waktu_simpan_data'=> date('y-m-d'),
+                            'status'=>$_POST['status']
+
+                                ];
+                        $Model = new banners();
+                        $Model->save($data);
+                        
+                    set_notif('success','berhasil','berhasil edit banners');
+                                if(session()->get('role_baku') == 1){
+                        return redirect('superadmin/banners');
+                                }elseif(session()->get('role_baku') == 2){
+                        return redirect('admins/banners');
+
+                                }else{
+                        return redirect('user/banners');
+        
+    }
+                }}
+                
     public function detail($id)
     {
        $model = new banners();

@@ -16,7 +16,7 @@ class LayananController extends BaseController
     {
         $role = $this->getRoleData();
         $Model = new Layanan();
-        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+        if(session()->get('role_baku') == 1){
             $ModelUser = new ModelPengguna();
         $ModelOrganisasi = new ModelOrganisasi();
         $layanan = $Model->get()->getResult();
@@ -55,13 +55,14 @@ function simpan(){
                     "gambar" => $name
                 ));
             }
-        if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2){
+        if(session()->get('role_baku') == 1){
             $modelPengguna = new ModelPengguna;
             $pengguna = $modelPengguna->where('organisasi_kode',$_POST['organisasi_kode'])->first();
             $pengguna = $pengguna['id_pengguna'];
             $organisasinya = $_POST['organisasi_kode'];
         }else{
-            $pengguna = session()->get('id_pengguna');
+            $pengguna = $this->getuser();
+            $pengguna = $pengguna['id_pengguna'];
             $organisasinya = session()->get('organisasi_kode');
         }
         

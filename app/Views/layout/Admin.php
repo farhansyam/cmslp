@@ -44,6 +44,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
     <!-- Vendor -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/formvalidation/dist/css/formValidation.min.c')?>ss" />
+      <script src="https://cdn.tiny.cloud/1/duf9pa4i1whjydpvnv84103i11oib8me88cuq5t2csqql3dp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/pages/page-auth.css')?>" />
@@ -160,6 +161,7 @@
                 <div data-i18n="Data Pengguna">Data Pengguna</div>
               </a>
             </li>
+            <!-- Apps & Pages -->
             <li class="menu-header fw-light mt-4">
               <span class="menu-header-text">Core </span>
             </li>
@@ -248,6 +250,11 @@
                 <div data-i18n="Testimoni">Testimoni</div>
               </a>
             </li>
+
+            <!-- Misc -->
+            <li class="menu-header fw-light mt-4">
+              <span class="menu-header-text">Logout</span>
+            </li>
             <li class="menu-item">
               <a href="<?php echo site_url('admins/logout')?>" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-logout"></i>
@@ -285,6 +292,56 @@
                     <i class="mdi mdi-24px"></i>
                   </a>
                 </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="<?php echo base_url('assets/img/avatars/1.png')?>" alt="" class="w-px-40 h-auto rounded-circle">
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item waves-effect" href="pages-account-settings-account.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="<?php echo base_url('assets/img/avatars/1.png')?>" alt="" class="w-px-40 h-auto rounded-circle">
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block"><?= session()->get('username')?></span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                      <?php
+                          // Load model
+                          $model = new \App\Models\ModelRole();
+                          $modelOrganisasi = new \App\Models\ModelOrganisasi();
+
+                          // Panggil metode di model untuk mendapatkan data
+                          $data = $model->where('id_role',session()->get('role'))->first();
+
+                        ?>
+                             <?php foreach(json_decode($data['list_organisasi']) as $d){ 
+                              $org = $modelOrganisasi->where('organisasi_kode',$d)->first();
+                              $a = $org['nama_organisasi'];
+                              ?>
+                           <li>
+                      <a class="dropdown-item waves-effect" href="<?= site_url('admins/set/'.$d) ?>">
+                        <i class="mdi mdi-lifebuoy me-2"></i>
+                        <span class="align-middle"><?= $d ?> | <?= $a ?> <?= session()->get('organisasi_kode') == $d ? "⭐":"" ?> </span>
+                      </a>
+                    </li>
+                    <?php }?>
+
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                  </ul>
+                </li>
                 <!--/ Style Switcher -->
 
                 <!-- User -->
@@ -310,6 +367,13 @@
           <div class="content-wrapper">
             <!-- Content -->
             <?= $this->renderSection('content') ?>
+            <script>
+                          tinymce.init({
+                            selector: 'textarea',
+                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                          });
+                        </script>
          
             <!-- / Content -->
 
@@ -366,6 +430,7 @@
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')?>"></script>
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')?>"></script>
     <script src="<?= base_url('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')?>"></script>
+
     <!-- Main JS -->
     <script src="<?= base_url('assets/js/main.js')?>"></script>
 

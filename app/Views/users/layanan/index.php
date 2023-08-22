@@ -59,15 +59,14 @@
                           <?php if(session()->get('role_baku') == 1 ){?>
                             <td><a href="<?= site_url('superadmin/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
                           
-                            <?php } if(session()->get('role_baku') == 2) {?>
-                            <td><a href="<?= site_url('admins/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
-
-                        <?php } else { ?>
-                          <td><a href="<?= site_url('user/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
-                          <?php } ?>
+                            <?php }elseif(session()->get('role_baku') == 2) { ?>
+                          <td><a href="<?= site_url('admins/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
+                          <?php }else{ ?>
+                            <td><a href="<?= site_url('user/layanan/detail/'.$d->id_layanan )?>"><button>View</button></a></td>
+                            <?php } ?>
                         <td><?= $d->judul_layanan?></td>
                         <td><?= $d->deskripsi_1?></td>
-                              <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                              <?php if(session()->get('role_baku') == 1) {?>
                         <td><?= $d->id_pengguna['username']?></td>
                         <td><?= $d->organisasi_kode['nama_organisasi']?></td>
                         <?php } else { ?>

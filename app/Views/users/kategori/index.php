@@ -1,5 +1,9 @@
-<?php $this->extend('layout/User'); ?>
+<?php if(session()->get('role_baku') == 1) {?>
+<?php $this->extend('layout/SuperAdmin');}elseif(session()->get('role_baku') == 2){
 
+ ?>
+<?php $this->extend('layout/Admin'); }else{?>
+<?php $this->extend('layout/User'); }?>
 <?= $this->section('content') ?>
 <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"> kategori</h4>
@@ -10,7 +14,11 @@
                 <div class="card-body">
             <?php if($role['create_data'] == 'Y') {?>
                       <div class="demo-inline-spacing">
-                        <a href="<?= site_url('user/kategori/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+                        <?php if(session()->get('role_baku') == 2){ ?>
+                          <a href="<?= site_url('admins/kategori/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+              <?php }else{ ?>
+                <a href="<?= site_url('user/kategori/tambah')?>"><button type="button" class="btn btn-primary waves-effect waves-light">Tambah</button></a>
+              <?php } ?>
                       </div>
             <?php }?>
                     </div>
@@ -21,6 +29,7 @@
                       <tr>
                         <th>No</th>
                         <th>Kategori</th>
+                        <th>Bagian</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -32,6 +41,12 @@
                            <tr>
                         <td><?= $no++?></td>
                         <td><?= $d['kategori']?></td>
+                        <td><?php if($d['bagian'] == 1) {?>
+                        <span">Blog</span>
+                          <?php } else{?>
+                        <span>Banner</span>
+                         <?php } ?>
+                        </td>
                         <td><?php if($d['status'] == 1) {?>
                         <span class="badge bg-label-success me-1">Active</span>
                           <?php } else{?>
@@ -44,11 +59,20 @@
                               <i class="mdi mdi-dots-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <?php if($role['update_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('user/kategori/edit/')?><?=$d['id_kategori']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
-                              <?php } ?>
-                            <?php if($role['delete_data'] == 'Y') {?>
-                              <a class="dropdown-item waves-effect" href="<?= site_url('user/kategori/hapus/')?><?=$d['id_kategori']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                              <?php if(session()->get('role_baku') == 2){ ?>
+                                <?php if($role['update_data'] == 'Y') {?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/kategori/edit/')?><?=$d['id_kategori']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                <?php } ?>
+                              <?php if($role['delete_data'] == 'Y') {?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('admins/kategori/hapus/')?><?=$d['id_kategori']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                <?php } ?>
+                              <?php }else{ ?>
+                                <?php if($role['update_data'] == 'Y') {?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('user/kategori/edit/')?><?=$d['id_kategori']?>"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                <?php } ?>
+                              <?php if($role['delete_data'] == 'Y') {?>
+                                <a class="dropdown-item waves-effect" href="<?= site_url('user/kategori/hapus/')?><?=$d['id_kategori']?>"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                <?php } ?>
                               <?php } ?>
                            
                             </div>

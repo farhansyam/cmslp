@@ -40,7 +40,7 @@
                         <th>banners</th>
                         <th>judul</th>
                         <th>deskripsi</th>
-                        <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <?php if(session()->get('role_baku') == 1) {?>
                         <th>Owner</th>
                         <th>Organisasi</th>
                         <?php } else { ?>
@@ -58,16 +58,16 @@
                            <tr>
                         <td><?= $no++?></td>
                            <?php if(session()->get('role_baku') == 1 ){?>
-                            <td><a href="<?= site_url('superadmin/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
                            <?php } elseif(session()->get('role_baku') == 2) {?>
-                            <td><a href="<?= site_url('admins/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                          <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
 
                         <?php } else { ?>
-                          <td><a href="<?= site_url('user/banners/detail/'.$d->id_banner )?>"><button>View</button></a></td>
+                        <td><img width="200" height="100" src="<?php echo base_url('uploads/banners/'.$d->gambar)?>" alt="" srcset=""></td>
                           <?php } ?>
                         <td><?= $d->judul?></td>
                         <td><?= $d->deskripsi?></td>
-                        <?php if(session()->get('role_baku') == 1 || session()->get('role_baku') == 2) {?>
+                        <?php if(session()->get('role_baku') == 1 ) {?>
                         <th><?= $d->id_pengguna['username']?></th>
                         <th><?= $d->organisasi_kode['nama_organisasi'] ?></th>
                         <?php } else { ?>
